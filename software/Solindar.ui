@@ -23,25 +23,6 @@
     <normaloff>logo.png</normaloff>logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QCheckBox" name="gridstate">
-    <property name="geometry">
-     <rect>
-      <x>1040</x>
-      <y>250</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-      <italic>true</italic>
-     </font>
-    </property>
-    <property name="text">
-     <string>Mostrar Grid</string>
-    </property>
-   </widget>
    <widget class="Canvas" name="canvas" native="true">
     <property name="geometry">
      <rect>
@@ -69,7 +50,7 @@
       <x>980</x>
       <y>120</y>
       <width>281</width>
-      <height>101</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -84,7 +65,7 @@
        <x>0</x>
        <y>3</y>
        <width>281</width>
-       <height>91</height>
+       <height>140</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -103,31 +84,31 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QComboBox" name="timebase">
-        <property name="font">
-         <font>
-          <pointsize>20</pointsize>
-         </font>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QCheckBox" name="sonar">
+        <property name="autoFillBackground">
+         <bool>false</bool>
         </property>
-        <property name="currentIndex">
-         <number>0</number>
+        <property name="text">
+         <string>Sonar</string>
         </property>
-        <item>
-         <property name="text">
-          <string>Sonar</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Lidar</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Fusión</string>
-         </property>
-        </item>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QCheckBox" name="lidar">
+        <property name="text">
+         <string>Lidar</string>
+        </property>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QCheckBox" name="fusion">
+        <property name="text">
+         <string>Fusión</string>
+        </property>
        </widget>
       </item>
      </layout>
@@ -206,7 +187,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Distancia:</string>
+     <string>Posición:</string>
     </property>
     <property name="textFormat">
      <enum>Qt::AutoText</enum>
@@ -223,6 +204,21 @@
       <width>261</width>
       <height>101</height>
      </rect>
+    </property>
+    <property name="smallDecimalPoint">
+     <bool>true</bool>
+    </property>
+    <property name="digitCount">
+     <number>3</number>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Filled</enum>
+    </property>
+    <property name="value" stdset="0">
+     <double>0.000000000000000</double>
+    </property>
+    <property name="intValue" stdset="0">
+     <number>0</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -245,7 +241,7 @@
      <string>Filtro:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="Filtro">
     <property name="geometry">
      <rect>
       <x>1070</x>
@@ -273,7 +269,7 @@
      <x>0</x>
      <y>0</y>
      <width>1279</width>
-     <height>36</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
