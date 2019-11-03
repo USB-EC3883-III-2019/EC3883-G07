@@ -1,0 +1,67 @@
+<CodeGenerationInfo>
+  <ToolchainSettings>
+    <option>
+      <name>PE_G_4PEx_ToolChain_Compiler_SearchUserPaths</name>
+      <values lines_count="2">
+        <Line>"${ProjDirPath}/Sources"</Line>
+        <Line>"${ProjDirPath}/Generated_Code"</Line>
+      </values>
+    </option>
+  </ToolchainSettings>
+  <GeneratedFilesList>
+    <GeneratedByPE>
+      <File Name="Generated_Code/TI4.c" FileDate="2019-10-23, 12:54:33" FileAge="1571851473999" FileType="45637" CompNumb="50" />
+      <File Name="Generated_Code/Cpu.c" FileDate="2019-10-23, 12:54:34" FileAge="1571851474192" FileType="45637" CompNumb="4" />
+      <File Name="Generated_Code/TI3.h" FileDate="2019-10-14, 15:04:42" FileAge="1571081682788" FileType="45637" CompNumb="36" />
+      <File Name="Documentation/Sully el SOLINDAR.txt" FileDate="2019-10-23, 12:59:33" FileAge="1571851773643" FileType="3072" />
+      <File Name="Sources/Events.h" FileDate="2019-10-23, 12:54:34" FileAge="1571851474220" FileType="131328" />
+      <File Name="Generated_Code/TI3.c" FileDate="2019-10-14, 15:04:43" FileAge="1571081683036" FileType="45637" CompNumb="36" />
+      <File Name="Sources/Events.c" FileDate="2019-10-23, 12:59:26" FileAge="1571851766261" FileType="131328" />
+      <File Name="Generated_Code/TI2.h" FileDate="2019-10-23, 12:24:04" FileAge="1571849644963" FileType="45637" CompNumb="14" />
+      <File Name="Generated_Code/PE_Timer.h" FileDate="2019-10-21, 10:54:15" FileAge="1571671455568" FileType="45637" />
+      <File Name="Generated_Code/TI2.c" FileDate="2019-10-23, 12:24:05" FileAge="1571849645002" FileType="45637" CompNumb="14" />
+      <File Name="Generated_Code/PE_Timer.c" FileDate="2019-10-21, 10:54:15" FileAge="1571671455576" FileType="45637" />
+      <File Name="Generated_Code/TI1.h" FileDate="2019-10-28, 15:04:37" FileAge="1572291277788" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/TI1.c" FileDate="2019-10-28, 15:04:38" FileAge="1572291278016" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/LedFilt.h" FileDate="2019-10-23, 12:59:33" FileAge="1571851773484" FileType="45637" CompNumb="51" />
+      <File Name="Generated_Code/IO_Map.h" FileDate="2019-10-02, 12:27:41" FileAge="1570035461035" FileType="45637" />
+      <File Name="Generated_Code/AD1.h" FileDate="2019-10-07, 13:16:29" FileAge="1570470389382" FileType="45637" CompNumb="21" />
+      <File Name="Generated_Code/BotonFilt.h" FileDate="2019-10-23, 12:59:33" FileAge="1571851773453" FileType="45637" CompNumb="49" />
+      <File Name="Generated_Code/PE_Const.h" FileDate="2019-10-02, 12:27:41" FileAge="1570035461039" FileType="45637" />
+      <File Name="Generated_Code/LedFilt.c" FileDate="2019-10-23, 12:59:33" FileAge="1571851773500" FileType="45637" CompNumb="51" />
+      <File Name="Generated_Code/IO_Map.c" FileDate="2019-10-02, 12:27:41" FileAge="1570035461023" FileType="45637" />
+      <File Name="Generated_Code/AD1.c" FileDate="2019-10-07, 13:16:29" FileAge="1570470389397" FileType="45637" CompNumb="21" />
+      <File Name="Generated_Code/Inhr4.h" FileDate="2019-10-07, 15:03:16" FileAge="1570476796090" FileType="45637" CompNumb="12" />
+      <File Name="Documentation/Sully el SOLINDAR_SIGNALS.txt" FileDate="2019-10-28, 15:04:38" FileAge="1572291278067" FileType="3072" />
+      <File Name="Documentation/Sully el SOLINDAR_Settings.xml" FileDate="2019-10-28, 15:04:38" FileAge="1572291278141" FileType="3072" />
+      <File Name="Generated_Code/BotonFilt.c" FileDate="2019-10-23, 12:59:33" FileAge="1571851773469" FileType="45637" CompNumb="49" />
+      <File Name="Generated_Code/PE_Types.h" FileDate="2019-10-02, 12:27:41" FileAge="1570035461054" FileType="45637" />
+      <File Name="Generated_Code/PE_Error.h" FileDate="2019-10-02, 12:27:41" FileAge="1570035461043" FileType="45637" />
+      <File Name="Generated_Code/Inhr4.c" FileDate="2019-10-07, 15:03:16" FileAge="1570476796110" FileType="45637" CompNumb="12" />
+      <File Name="Generated_Code/FC161.h" FileDate="2019-10-21, 10:54:15" FileAge="1571671455196" FileType="45637" CompNumb="23" />
+      <File Name="Generated_Code/AS1.h" FileDate="2019-10-23, 12:16:29" FileAge="1571849189293" FileType="45637" CompNumb="15" />
+      <File Name="Generated_Code/Inhr3.h" FileDate="2019-10-07, 15:03:16" FileAge="1570476796041" FileType="45637" CompNumb="11" />
+      <File Name="Generated_Code/FC161.c" FileDate="2019-10-21, 10:54:15" FileAge="1571671455556" FileType="45637" CompNumb="23" />
+      <File Name="Sources/main.c" FileDate="2019-10-28, 15:04:28" FileAge="1572291268567" FileType="128" />
+      <File Name="Generated_Code/AS1.c" FileDate="2019-10-23, 12:16:29" FileAge="1571849189309" FileType="45637" CompNumb="15" />
+      <File Name="Project_Settings/Linker_Files/ProcessorExpert.prm" FileDate="2019-10-02, 12:27:40" FileAge="1570035460992" FileType="8" CompNumb="4" />
+      <File Name="Generated_Code/Inhr3.c" FileDate="2019-10-07, 15:03:16" FileAge="1570476796061" FileType="45637" CompNumb="11" />
+      <File Name="Generated_Code/Inhr2.h" FileDate="2019-10-07, 15:03:16" FileAge="1570476796010" FileType="45637" CompNumb="10" />
+      <File Name="Generated_Code/Inhr2.c" FileDate="2019-10-07, 15:03:16" FileAge="1570476796025" FileType="45637" CompNumb="10" />
+      <File Name="Generated_Code/MBitQ.h" FileDate="2019-10-07, 15:03:15" FileAge="1570476795957" FileType="45637" CompNumb="8" />
+      <File Name="Generated_Code/MBitQ.c" FileDate="2019-10-07, 15:03:15" FileAge="1570476795941" FileType="45637" CompNumb="8" />
+      <File Name="Generated_Code/Inhr1.h" FileDate="2019-10-07, 15:03:15" FileAge="1570476795980" FileType="45637" CompNumb="9" />
+      <File Name="Generated_Code/Bit1.h" FileDate="2019-10-14, 15:01:01" FileAge="1571081461252" FileType="45637" CompNumb="22" />
+      <File Name="Generated_Code/Inhr1.c" FileDate="2019-10-07, 15:03:15" FileAge="1570476795995" FileType="45637" CompNumb="9" />
+      <File Name="Generated_Code/Vectors.c" FileDate="2019-10-23, 12:54:34" FileAge="1571851474203" FileType="45637" CompNumb="4" />
+      <File Name="Generated_Code/Bit1.c" FileDate="2019-10-14, 15:01:01" FileAge="1571081461263" FileType="45637" CompNumb="22" />
+      <File Name="Generated_Code/Cap1.h" FileDate="2019-10-21, 10:54:15" FileAge="1571671455537" FileType="45637" CompNumb="20" />
+      <File Name="Generated_Code/FC81.h" FileDate="2019-10-14, 14:26:57" FileAge="1571079417542" FileType="45637" CompNumb="25" />
+      <File Name="Generated_Code/Cpu.h" FileDate="2019-10-23, 12:54:34" FileAge="1571851474174" FileType="45637" CompNumb="4" />
+      <File Name="Generated_Code/TI4.h" FileDate="2019-10-23, 12:54:34" FileAge="1571851474002" FileType="45637" CompNumb="50" />
+      <File Name="Generated_Code/Cap1.c" FileDate="2019-10-21, 10:54:15" FileAge="1571671455269" FileType="45637" CompNumb="20" />
+      <File Name="Generated_Code/FC81.c" FileDate="2019-10-14, 14:26:57" FileAge="1571079417642" FileType="45637" CompNumb="25" />
+    </GeneratedByPE>
+  </GeneratedFilesList>
+  <CodeGenReference>87</CodeGenReference>
+</CodeGenerationInfo>
