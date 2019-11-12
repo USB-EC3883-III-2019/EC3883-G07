@@ -55,7 +55,7 @@ char flagmotor=0;
 void main(void)
 {
 	char carac,prueba=0b00001111, error;
-	char step=1, sentido = 1, posicion = 40, stepmax = 9, z;
+	char step=1, sentido = 1, posicion = 40, stepmax = 8, z;
 	char zonas[6] = {7, 20, 33, 46, 59, 72};
 	char Q[8] = {0b00000101, 0b00000001,0b00001001, 0b00001000, 0b00001010, 0b00000010, 0b00000110, 0b00000100};
 	unsigned int espera;
@@ -83,11 +83,9 @@ void main(void)
 			flagmotor = 0;
 			if(posicion != zonas[z-1]){
 				sentido = (zonas[z-1]>posicion);
-				if(step == stepmax)step = 1;	//Mantener steps en rango de 1 a stepmax (4 u 8)
-				if(!step) step = stepmax-1;	
-						
-				MBit1_PutVal(Q[(step-1)]);	
-				
+				if(step == stepmax && sentido)step = 0;	//Mantener steps en rango de 1 a stepmax (4 u 8)
+				if(step == 1 && !sentido) step = stepmax+1;	
+
 				if(sentido){
 					posicion++;
 					step++;
@@ -96,6 +94,8 @@ void main(void)
 					posicion--;
 					step--;
 				 }
+				
+				MBit1_PutVal(Q[(step-1)]);	
 			}
 		}
 	}
