@@ -30,7 +30,6 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 		self.msgr = " "
 		self.datos = np.zeros(4)
 
-
 		# Funciones
 		self.Modo.setStatusTip("Maestro/Esclavo")
 		self.Modo.activated[str].connect(self.Mode)
@@ -71,7 +70,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 					print(self.msg)
 										
 					# Entramado
-					self.msg = self.msg.toUtf8().data()
+					self.msg = self.msg.toUtf8().data() #Si se usa una version distinta de Python 2.7, ignorar esta linea
 					self.datos[0] = 128|((ord(self.msg)&240)>>4)
 					self.datos[1] = ord(self.msg)&15 | self.Z0<<4
 					self.datos[2] = (self.Z1<<3) | self.Z2
