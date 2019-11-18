@@ -46,6 +46,7 @@
 #include "Inhr3.h"
 #include "Inhr4.h"
 #include "TI2.h"
+#include "TI3.h"
 
 
 void AS1_OnError(void);
@@ -227,6 +228,22 @@ void AS2_OnFreeTxBuf(void);
 **     Description :
 **         This event is called after the last character in output
 **         buffer is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void TI3_OnInterrupt(void);
+/*
+** ===================================================================
+**     Event       :  TI3_OnInterrupt (module Events)
+**
+**     Component   :  TI3 [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
 **     Parameters  : None
 **     Returns     : Nothing
 ** ===================================================================

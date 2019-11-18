@@ -32,9 +32,11 @@
 #include "Events.h"
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
-extern char flag;
+extern char flagusuario;
+extern char flagtorre;
 extern char flagser;
 extern char flagmotor;
+extern char flagespera;
 
 /*
 ** ===================================================================
@@ -73,7 +75,7 @@ void  AS1_OnError(void)
 */
 void  AS1_OnRxChar(void)
 {
-  flag = 1;
+  flagusuario = 1;
 }
 
 /*
@@ -205,7 +207,7 @@ void  AS2_OnError(void)
 */
 void  AS2_OnRxChar(void)
 {
-  /* Write your code here ... */
+	flagtorre = 1;
 }
 
 /*
@@ -257,6 +259,26 @@ void  AS2_OnFullRxBuf(void)
 void  AS2_OnFreeTxBuf(void)
 {
   /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  TI3_OnInterrupt (module Events)
+**
+**     Component   :  TI3 [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void TI3_OnInterrupt(void)
+{
+  flagespera = 1;
+
 }
 
 /* END Events */

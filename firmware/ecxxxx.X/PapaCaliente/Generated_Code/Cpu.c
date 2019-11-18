@@ -7,7 +7,7 @@
 **     Version     : Component 01.003, Driver 01.40, CPU db: 3.00.067
 **     Datasheet   : MC9S08QE128RM Rev. 2 6/2007
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-11, 12:50, # CodeGen: 29
+**     Date/Time   : 2019-11-18, 14:16, # CodeGen: 38
 **     Abstract    :
 **         This component "MC9S08QE128_80" contains initialization 
 **         of the CPU and provides basic methods and events for 
@@ -77,6 +77,7 @@
 #include "Inhr3.h"
 #include "Inhr4.h"
 #include "TI2.h"
+#include "TI3.h"
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -183,8 +184,8 @@ void _EntryPoint(void)
   /*lint -restore Enable MISRA rule (11.3) checking. */
   /* ICSC1: CLKS=0,RDIV=0,IREFS=1,IRCLKEN=1,IREFSTEN=0 */
   setReg8(ICSC1, 0x06U);               /* Initialization of the ICS control register 1 */ 
-  /* ICSC2: BDIV=1,RANGE=1,HGO=0,LP=0,EREFS=0,ERCLKEN=1,EREFSTEN=0 */
-  setReg8(ICSC2, 0x62U);               /* Initialization of the ICS control register 2 */ 
+  /* ICSC2: BDIV=1,RANGE=0,HGO=0,LP=0,EREFS=0,ERCLKEN=1,EREFSTEN=0 */
+  setReg8(ICSC2, 0x42U);               /* Initialization of the ICS control register 2 */ 
   while(ICSSC_IREFST == 0U) {          /* Wait until the source of reference clock is internal clock */
   }
   /* ICSSC: DRST_DRS=2,DMX32=1 */
@@ -296,6 +297,8 @@ void PE_low_level_init(void)
   /* ### MultiBitIO "MBit1" init code ... */
   /* ### TimerInt "TI2" init code ... */
   TI2_Init();
+  /* ### TimerInt "TI3" init code ... */
+  TI3_Init();
   /* Common peripheral initialization - ENABLE */
   /* TPM2SC: CLKSB=0,CLKSA=1 */
   clrSetReg8Bits(TPM2SC, 0x10U, 0x08U); 

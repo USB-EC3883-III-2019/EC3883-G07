@@ -26,6 +26,8 @@ Module "AS1"       (component AsynchroSerial)
                 defined and the receiver property is enabled.
    - AS1_ClearTxBuf -Clears the transmit buffer.  This method is available only if non-zero length of the output buffer is 
                 defined and the receiver property is enabled.
+   - AS1_CharsInRxBuf -Returns the number of characters in the input buffer. This method is available only if the receiver 
+                property is enabled.  [deprecated method]
    - AS1_GetCharsInRxBuf -Returns the number of characters in the input buffer. This method is available only if the receiver 
                 property is enabled.
    - AS1_GetCharsInTxBuf -Returns the number of characters in the output buffer. This method is available only if the 
@@ -115,6 +117,10 @@ Module "MBit1"     (component MultiBitIO)
                 zero, where 0 is equaled to LSB.
 
 Module "TI2"       (component TimerInt)
+   - TI2_EnableEvent -This method enables the events.
+   - TI2_DisableEvent -This method disables the events.
+
+Module "TI3"       (component TimerInt)
 
 Module "Cpu"       (component MC9S08QE128_80)
    - Cpu_EnableInt -Enables maskable interrupts

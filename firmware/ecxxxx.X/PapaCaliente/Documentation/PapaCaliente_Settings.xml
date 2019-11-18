@@ -390,11 +390,11 @@ asm(BGND);
           </group>
           <boolgroup name="External clock" v="Enabled">
             <enumgroup name="Clock source" v="External oscillator">
-              <Clock_frequency__MHz_ v="50" />
+              <Clock_frequency__MHz_ v="0.032768000000" />
               <group name="Clock input pin">
                 <Pin_name v="PTB7_SCL1_EXTAL" />
               </group>
-              <Clock_range v="High frequency" />
+              <Clock_range v="Low frequency" />
               <External_ref__clock_for_peripherals v="Enabled" />
             </enumgroup>
           </boolgroup>
@@ -899,7 +899,7 @@ asm(BGND);
       <SendBlock v="generate code" />
       <ClearRxBuf v="generate code" />
       <ClearTxBuf v="generate code" />
-      <CharsInRxBuf v="don&amp;apos;t generate code" />
+      <CharsInRxBuf v="generate code" />
       <GetCharsInRxBuf v="generate code" />
       <CharsInTxBuf v="don&amp;apos;t generate code" />
       <GetCharsInTxBuf v="generate code" />
@@ -1411,6 +1411,55 @@ autoselected pull
     <Methods>
       <Enable v="don&amp;apos;t generate code" />
       <Disable v="don&amp;apos;t generate code" />
+      <EnableEvent v="generate code" />
+      <DisableEvent v="generate code" />
+      <SetPeriodMode v="don&amp;apos;t generate code" />
+      <SetPeriodTicks16 v="don&amp;apos;t generate code" />
+      <SetPeriodTicks32 v="don&amp;apos;t generate code" />
+      <SetPeriodUS v="don&amp;apos;t generate code" />
+      <SetPeriodMS v="don&amp;apos;t generate code" />
+      <SetPeriodSec v="don&amp;apos;t generate code" />
+      <SetPeriodReal v="don&amp;apos;t generate code" />
+      <SetFreqHz v="don&amp;apos;t generate code" />
+      <SetFreqkHz v="don&amp;apos;t generate code" />
+      <SetFreqMHz v="don&amp;apos;t generate code" />
+    </Methods>
+    <Events>
+      <Event_module_name v="Events" />
+      <event name="BeforeNewSpeed" v="don&amp;apos;t generate code" />
+      <event name="AfterNewSpeed" v="don&amp;apos;t generate code" />
+      <event name="OnInterrupt" v="generate code">
+        <Event_procedure_name v="TI2_OnInterrupt" />
+        <Priority v="same as interrupt" />
+      </event>
+    </Events>
+  </Bean>
+  <Bean name="TI3" type="TimerInt">
+    <Enabled v="Y" />
+    <Properties>
+      <Component_name v="TI3" />
+      <Periodic_interrupt_source v="TPM30" />
+      <Counter v="TPM3" />
+      <boolgroup name="Interrupt service/event" v="Enabled">
+        <Interrupt v="Vtpm3ch0" />
+        <Interrupt_priority v="medium priority" />
+      </boolgroup>
+      <Interrupt_period v="250 ms" />
+      <Same_period_in_modes v="yes" />
+      <Component_uses_entire_timer v="no" />
+      <group name="Initialization">
+        <Enabled_in_init__code v="yes" />
+        <Events_enabled_in_init_ v="yes" />
+      </group>
+      <group name="CPU clock/speed selection">
+        <High_speed_mode v="This component enabled" />
+        <Low_speed_mode v="This component disabled" />
+        <Slow_speed_mode v="This component disabled" />
+      </group>
+    </Properties>
+    <Methods>
+      <Enable v="don&amp;apos;t generate code" />
+      <Disable v="don&amp;apos;t generate code" />
       <EnableEvent v="don&amp;apos;t generate code" />
       <DisableEvent v="don&amp;apos;t generate code" />
       <SetPeriodMode v="don&amp;apos;t generate code" />
@@ -1429,7 +1478,7 @@ autoselected pull
       <event name="BeforeNewSpeed" v="don&amp;apos;t generate code" />
       <event name="AfterNewSpeed" v="don&amp;apos;t generate code" />
       <event name="OnInterrupt" v="generate code">
-        <Event_procedure_name v="TI2_OnInterrupt" />
+        <Event_procedure_name v="TI3_OnInterrupt" />
         <Priority v="same as interrupt" />
       </event>
     </Events>

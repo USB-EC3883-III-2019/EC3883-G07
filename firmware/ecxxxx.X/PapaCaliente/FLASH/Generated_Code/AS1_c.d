@@ -1,5 +1,4 @@
 
-
 Generated_Code/AS1_c.obj: \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Project_Headers/../Generated_Code/AS1.c \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/AS1.h \
@@ -19,5 +18,6 @@ Generated_Code/AS1_c.obj: \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/Inhr2.h \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/Inhr3.h \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/Inhr4.h \
-	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/TI2.h 
+	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/TI2.h \
+	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/TI3.h 
 

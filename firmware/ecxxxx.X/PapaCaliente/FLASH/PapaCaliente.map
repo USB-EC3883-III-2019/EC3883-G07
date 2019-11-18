@@ -25,10 +25,10 @@ Inhr2_c.obj                             Model: BANKED,        Lang: ANSI-C
 Inhr3_c.obj                             Model: BANKED,        Lang: ANSI-C
 Inhr4_c.obj                             Model: BANKED,        Lang: ANSI-C
 MBit1_c.obj                             Model: BANKED,        Lang: ANSI-C
-PE_Timer_c.obj                          Model: BANKED,        Lang: ANSI-C
 PWM1_c.obj                              Model: BANKED,        Lang: ANSI-C
 TI1_c.obj                               Model: BANKED,        Lang: ANSI-C
 TI2_c.obj                               Model: BANKED,        Lang: ANSI-C
+TI3_c.obj                               Model: BANKED,        Lang: ANSI-C
 Vectors_c.obj                           Model: BANKED,        Lang: ANSI-C
 rtshc08.o (ansibim.lib)                 Model: BANKED,        Lang: ANSI-C
 
@@ -39,8 +39,8 @@ Entry point: 0x2084 (_EntryPoint)
 _startupData is allocated at 0x20C9 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0xA0     74
-  _Copy    *toCopyDownBeg 0x2582
+  _Range   pZeroOut       0xA0     71
+  _Copy    *toCopyDownBeg 0x244F
 } _startupData;
 
 *********************************************************************************************
@@ -49,9 +49,9 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             73     R     0x2080     0x20C8   ROM
 .startData                        18     R     0x20C9     0x20DA   ROM
-NON_BANKED                      1191     R     0x20DB     0x2581   ROM
-.copy                              2     R     0x2582     0x2583   ROM
-.text                            985     R     0x8000     0x83D8   PPAGE_0
+NON_BANKED                       884     R     0x20DB     0x244E   ROM
+.copy                              2     R     0x244F     0x2450   ROM
+.text                           1076     R     0x8000     0x8433   PPAGE_0
 .abs_section_ffbd                  1     R     0xFFBD     0xFFBD   .absSeg0
 .abs_section_ffbf                  1     R     0xFFBF     0xFFBF   .absSeg1
 .abs_section_0                     1   N/I        0x0        0x0   .absSeg2
@@ -235,19 +235,20 @@ NON_BANKED                      1191     R     0x20DB     0x2581   ROM
 .abs_section_1816                  2   N/I     0x1816     0x1817   .absSeg180
 .abs_section_1870                  2   N/I     0x1870     0x1871   .absSeg181
 .abs_section_ffc0                 64     R     0xFFC0     0xFFFF   .absSeg182
-.bss                              67   R/W       0xA0       0xE2   RAM
-AS1_CODE                         224     R     0x83D9     0x84B8   PPAGE_0
-AS2_CODE                         151     R     0x84B9     0x854F   PPAGE_0
-PWM1_CODE                        148     R     0x8550     0x85E3   PPAGE_0
-TI1_CODE                          53     R     0x85E4     0x8618   PPAGE_0
-FC321_CODE                       273     R     0x8619     0x8729   PPAGE_0
-TI2_CODE                          30     R     0x872A     0x8747   PPAGE_0
-.common                            7   R/W       0xE3       0xE9   RAM
-.stack                           512   R/W       0xEA      0x2E9   RAM
+.bss                              64   R/W       0xA0       0xDF   RAM
+AS1_CODE                         311     R     0x8434     0x856A   PPAGE_0
+AS2_CODE                         427     R     0x856B     0x8715   PPAGE_0
+PWM1_CODE                        148     R     0x8716     0x87A9   PPAGE_0
+TI1_CODE                          53     R     0x87AA     0x87DE   PPAGE_0
+FC321_CODE                        88     R     0x87DF     0x8836   PPAGE_0
+TI2_CODE                          39     R     0x8837     0x885D   PPAGE_0
+TI3_CODE                          20     R     0x885E     0x8871   PPAGE_0
+.common                            7   R/W       0xE0       0xE6   RAM
+.stack                           512   R/W       0xE7      0x2E6   RAM
 
 Summary of section sizes per section type:
-READ_ONLY (R):         C8E (dec:     3214)
-READ_WRITE (R/W):      24A (dec:      586)
+READ_ONLY (R):         C85 (dec:     3205)
+READ_WRITE (R/W):      247 (dec:      583)
 NO_INIT (N/I):          CF (dec:      207)
 
 *********************************************************************************************
@@ -269,18 +270,21 @@ MODULE:                 -- Events_c.obj --
      TI1_OnInterrupt                           800A       A      10       2   .text       
      TI2_OnInterrupt                           8014       6       6       2   .text       
      AS2_OnError                               801A       1       1       4   .text       
-     AS2_OnRxChar                              801B       1       1       2   .text       
-     AS2_OnTxChar                              801C       1       1       2   .text       
-     AS2_OnFullRxBuf                           801D       1       1       2   .text       
-     AS2_OnFreeTxBuf                           801E       1       1       2   .text       
+     AS2_OnRxChar                              801B       6       6       2   .text       
+     AS2_OnTxChar                              8021       1       1       2   .text       
+     AS2_OnFullRxBuf                           8022       1       1       2   .text       
+     AS2_OnFreeTxBuf                           8023       1       1       2   .text       
+     TI3_OnInterrupt                           8024       6       6       2   .text       
 - VARIABLES:
 MODULE:                 -- main_c.obj --
 - PROCEDURES:
-     main                                      801F      F7     247       3   .text       
+     main                                      802A     2D5     725      25   .text       
 - VARIABLES:
-     flag                                        A0       1       1       3   .bss        
-     flagser                                     A1       1       1       2   .bss        
-     flagmotor                                   A2       1       1       3   .bss        
+     flagusuario                                 A0       1       1       2   .bss        
+     flagtorre                                   A1       1       1       3   .bss        
+     flagser                                     A2       1       1       1   .bss        
+     flagmotor                                   A3       1       1       5   .bss        
+     flagespera                                  A4       1       1       3   .bss        
 MODULE:                 -- start08_c.obj --
 - PROCEDURES:
      loadByte                                  20DB       E      14       5   NON_BANKED  
@@ -289,70 +293,68 @@ MODULE:                 -- start08_c.obj --
 - VARIABLES:
      _startupData                              20C9       6       6       4   .startData  
 - LABELS:
-     __SEG_END_SSTACK                           2EA       0       0       1               
+     __SEG_END_SSTACK                           2E7       0       0       1               
 MODULE:                 -- AS1_c.obj --
 - PROCEDURES:
      AS1_InterruptRx                           2160      63      99       1   NON_BANKED  
      AS1_InterruptTx                           21C3      5C      92       1   NON_BANKED  
      AS1_InterruptError                        221F      12      18       1   NON_BANKED  
-     AS1_RecvChar                              83D9      63      99       2   AS1_CODE    
-     AS1_SendChar                              843C      4A      74       2   AS1_CODE    
-     AS1_Init                                  8486      33      51       2   AS1_CODE    
+     AS1_RecvChar                              8434      63      99       4   AS1_CODE    
+     AS1_SendChar                              8497      4A      74       2   AS1_CODE    
+     AS1_RecvBlock                             84E1      57      87       2   AS1_CODE    
+     AS1_Init                                  8538      33      51       2   AS1_CODE    
 - VARIABLES:
-     SerFlag                                     A3       1       1      10   .bss        
-     InpIndxR                                    A4       1       1       3   .bss        
-     InpIndxW                                    A5       1       1       3   .bss        
-     InpBuffer                                   A6       8       8       2   .bss        
-     OutIndxR                                    AE       1       1       3   .bss        
-     OutIndxW                                    AF       1       1       3   .bss        
-     OutBuffer                                   B0       8       8       2   .bss        
-     OnFreeTxBuf_semaphore                       B8       1       1       2   .bss        
-     AS1_InpLen                                  E3       1       1       7   .common     
-     AS1_OutLen                                  E4       1       1       5   .common     
+     SerFlag                                     A5       1       1      10   .bss        
+     InpIndxR                                    A6       1       1       3   .bss        
+     InpIndxW                                    A7       1       1       3   .bss        
+     InpBuffer                                   A8       8       8       2   .bss        
+     OutIndxR                                    B0       1       1       3   .bss        
+     OutIndxW                                    B1       1       1       3   .bss        
+     OutBuffer                                   B2       8       8       2   .bss        
+     OnFreeTxBuf_semaphore                       BA       1       1       2   .bss        
+     AS1_InpLen                                  E0       1       1       7   .common     
+     AS1_OutLen                                  E1       1       1       5   .common     
 MODULE:                 -- AS2_c.obj --
 - PROCEDURES:
      AS2_InterruptRx                           2231      6D     109       1   NON_BANKED  
      AS2_InterruptTx                           229E      6B     107       1   NON_BANKED  
      AS2_InterruptError                        2309      14      20       1   NON_BANKED  
-     AS2_SendChar                              84B9      59      89       2   AS2_CODE    
-     AS2_Init                                  8512      3E      62       2   AS2_CODE    
+     AS2_RecvChar                              856B      65     101       6   AS2_CODE    
+     AS2_RecvBlock                             85D0      57      87       4   AS2_CODE    
+     AS2_SendBlock                             8627      B1     177       5   AS2_CODE    
+     AS2_Init                                  86D8      3E      62       2   AS2_CODE    
 - VARIABLES:
-     SerFlag                                     B9       1       1       8   .bss        
-     InpIndxR                                    BA       1       1       1   .bss        
-     InpIndxW                                    BB       1       1       5   .bss        
-     InpBuffer                                   BC       9       9       1   .bss        
-     OutIndxR                                    C5       1       1       5   .bss        
-     OutIndxW                                    C6       1       1       5   .bss        
-     OutBuffer                                   C7       9       9       2   .bss        
-     OnFreeTxBuf_semaphore                       D0       1       1       2   .bss        
-     AS2_InpLen                                  E5       1       1       4   .common     
-     AS2_OutLen                                  E6       1       1       5   .common     
+     SerFlag                                     BB       1       1      10   .bss        
+     InpIndxR                                    BC       1       1       5   .bss        
+     InpIndxW                                    BD       1       1       5   .bss        
+     InpBuffer                                   BE       9       9       2   .bss        
+     OutIndxR                                    C7       1       1       5   .bss        
+     OutIndxW                                    C8       1       1       5   .bss        
+     OutBuffer                                   C9       9       9       2   .bss        
+     OnFreeTxBuf_semaphore                       D2       1       1       5   .bss        
+     AS2_InpLen                                  E2       1       1       8   .common     
+     AS2_OutLen                                  E3       1       1       6   .common     
 MODULE:                 -- Cpu_c.obj --
 - PROCEDURES:
-     PE_low_level_init                         8116      A8     168       2   .text       
-     Cpu_Interrupt                             2080       4       4      22   .init       
+     PE_low_level_init                         82FF      AC     172       2   .text       
+     Cpu_Interrupt                             2080       4       4      21   .init       
      _EntryPoint                               2084      45      69       1   .init       
 - VARIABLES:
      NVPROT_INIT                               FFBD       1       1       0   .abs_section_ffbd
      NVOPT_INIT                                FFBF       1       1       0   .abs_section_ffbf
-     CCR_reg                                     E7       1       1      10   .common     
-     CCR_lock                                    E8       1       1      21   .common     
-     Shadow_PTD                                  E9       1       1      13   .common     
+     CCR_reg                                     E4       1       1       8   .common     
+     CCR_lock                                    E5       1       1      17   .common     
+     Shadow_PTD                                  E6       1       1      13   .common     
 MODULE:                 -- FC321_c.obj --
 - PROCEDURES:
      FC321_Interrupt                           231D      30      48       1   NON_BANKED  
-     LoadTicks                                 8619      34      52       2   FC321_CODE  
-     HWEnDi                                    864D      2C      44       4   FC321_CODE  
-     FC321_Reset                               8679      32      50       2   FC321_CODE  
-     FC321_GetTimeUS                           86AB      53      83       2   FC321_CODE  
-     FC321_Init                                86FE      2C      44       2   FC321_CODE  
+     HWEnDi                                    87DF      2C      44       2   FC321_CODE  
+     FC321_Init                                880B      2C      44       2   FC321_CODE  
 - VARIABLES:
-     EnUser                                      D1       1       1       2   .bss        
-     TTicks                                      D2       4       4       7   .bss        
-     LTicks                                      D6       4       4       4   .bss        
-     TOvf                                        DA       1       1       4   .bss        
-     LOvf                                        DB       1       1       2   .bss        
-     CmpVal                                      DC       2       2       5   .bss        
+     EnUser                                      D3       1       1       2   .bss        
+     TTicks                                      D4       4       4       3   .bss        
+     TOvf                                        D8       1       1       2   .bss        
+     CmpVal                                      D9       2       2       5   .bss        
 MODULE:                 -- IO_Map_c.obj --
 - PROCEDURES:
 - VARIABLES:
@@ -417,9 +419,9 @@ MODULE:                 -- IO_Map_c.obj --
      _TPM2SC                                     50       1       1       5   .abs_section_50
      _TPM2C0SC                                   55       1       1       5   .abs_section_55
      _TPM2C1SC                                   58       1       1       0   .abs_section_58
-     _TPM2C2SC                                   5B       1       1       3   .abs_section_5b
-     _TPM3SC                                     60       1       1       0   .abs_section_60
-     _TPM3C0SC                                   65       1       1       0   .abs_section_65
+     _TPM2C2SC                                   5B       1       1       8   .abs_section_5b
+     _TPM3SC                                     60       1       1       2   .abs_section_60
+     _TPM3C0SC                                   65       1       1       2   .abs_section_65
      _TPM3C1SC                                   68       1       1       0   .abs_section_68
      _TPM3C2SC                                   6B       1       1       0   .abs_section_6b
      _TPM3C3SC                                   6E       1       1       0   .abs_section_6e
@@ -522,9 +524,9 @@ MODULE:                 -- IO_Map_c.obj --
      _TPM2C0V                                    56       2       2       5   .abs_section_56
      _TPM2C1V                                    59       2       2       0   .abs_section_59
      _TPM2C2V                                    5C       2       2       3   .abs_section_5c
-     _TPM3CNT                                    61       2       2       0   .abs_section_61
-     _TPM3MOD                                    63       2       2       0   .abs_section_63
-     _TPM3C0V                                    66       2       2       0   .abs_section_66
+     _TPM3CNT                                    61       2       2       1   .abs_section_61
+     _TPM3MOD                                    63       2       2       1   .abs_section_63
+     _TPM3C0V                                    66       2       2       2   .abs_section_66
      _TPM3C1V                                    69       2       2       0   .abs_section_69
      _TPM3C2V                                    6C       2       2       0   .abs_section_6c
      _TPM3C3V                                    6F       2       2       0   .abs_section_6f
@@ -538,98 +540,90 @@ MODULE:                 -- IO_Map_c.obj --
      _SCI2BD                                   1870       2       2       2   .abs_section_1870
 MODULE:                 -- Inhr1_c.obj --
 - PROCEDURES:
-     Inhr1_PutVal                              81BE      1A      26       2   .text       
+     Inhr1_PutVal                              83AB      1A      26       2   .text       
 - VARIABLES:
 MODULE:                 -- Inhr2_c.obj --
 - PROCEDURES:
-     Inhr2_PutVal                              81D8      1A      26       2   .text       
+     Inhr2_PutVal                              83C5      1A      26       2   .text       
 - VARIABLES:
 MODULE:                 -- Inhr3_c.obj --
 - PROCEDURES:
-     Inhr3_PutVal                              81F2      1A      26       2   .text       
+     Inhr3_PutVal                              83DF      1A      26       2   .text       
 - VARIABLES:
 MODULE:                 -- Inhr4_c.obj --
 - PROCEDURES:
-     Inhr4_PutVal                              820C      1A      26       2   .text       
+     Inhr4_PutVal                              83F9      1A      26       2   .text       
 - VARIABLES:
 MODULE:                 -- MBit1_c.obj --
 - PROCEDURES:
-     MBit1_PutVal                              8226      21      33       2   .text       
-- VARIABLES:
-MODULE:                 -- PE_Timer_c.obj --
-- PROCEDURES:
-     PE_Timer_LngMul                           8247     14C     332       2   .text       
-     PE_Timer_LngHi2                           8393      46      70       2   .text       
+     MBit1_PutVal                              8413      21      33       4   .text       
 - VARIABLES:
 MODULE:                 -- PWM1_c.obj --
 - PROCEDURES:
-     SetRatio                                  8550      7C     124       2   PWM1_CODE   
-     PWM1_Init                                 85CC      18      24       2   PWM1_CODE   
+     SetRatio                                  8716      7C     124       2   PWM1_CODE   
+     PWM1_Init                                 8792      18      24       2   PWM1_CODE   
 - VARIABLES:
-     ActualRatio                                 DE       2       2       5   .bss        
+     ActualRatio                                 DB       2       2       5   .bss        
 MODULE:                 -- TI1_c.obj --
 - PROCEDURES:
      TI1_Interrupt                             234D       E      14       1   NON_BANKED  
-     HWEnDi                                    85E4      12      18       4   TI1_CODE    
-     TI1_Disable                               85F6       F      15       2   TI1_CODE    
-     TI1_Init                                  8605      14      20       2   TI1_CODE    
+     HWEnDi                                    87AA      12      18       4   TI1_CODE    
+     TI1_Disable                               87BC       F      15       2   TI1_CODE    
+     TI1_Init                                  87CB      14      20       2   TI1_CODE    
 - VARIABLES:
-     EnUser                                      E0       1       1       4   .bss        
+     EnUser                                      DD       1       1       4   .bss        
 MODULE:                 -- TI2_c.obj --
 - PROCEDURES:
      TI2_Interrupt                             235B      1A      26       1   NON_BANKED  
-     TI2_Init                                  872A      1E      30       2   TI2_CODE    
+     TI2_EnableEvent                           8837       9       9       4   TI2_CODE    
+     TI2_Init                                  8840      1E      30       2   TI2_CODE    
 - VARIABLES:
-     CmpVal                                      E1       2       2       3   .bss        
+     CmpVal                                      DE       2       2       3   .bss        
+MODULE:                 -- TI3_c.obj --
+- PROCEDURES:
+     TI3_Interrupt                             2375       9       9       1   NON_BANKED  
+     TI3_Init                                  885E      14      20       2   TI3_CODE    
+- VARIABLES:
 MODULE:                 -- Vectors_c.obj --
 - PROCEDURES:
 - VARIABLES:
      _vect                                     FFC0      40      64       0   .abs_section_ffc0
 MODULE:                 -- rtshc08.o (ansibim.lib) --
 - PROCEDURES:
-     _PUSH_ARGS_L                              2375      20      32       2   NON_BANKED  
-     _ENTER_UNARY_L                            2395      29      41       1   NON_BANKED  
-     _ENTER_BINARY_L                           23BE      16      22       2   NON_BANKED  
-     _ENTER_BINARY_L_RC                        23D4      19      25       1   NON_BANKED  
-     _LADD_k_is_k_plus_j                       23ED      1F      31       1   NON_BANKED  
-     _k_is_k_plus_j_l                          240C      1E      30       2   NON_BANKED  
-     _k_is_k_plus_j_i                          242A      12      18       3   NON_BANKED  
-     _LMUL_k_is_k_mul_j                        243C      81     129       1   NON_BANKED  
-     _LCMP_k_rel_j                             24BD      1F      31       1   NON_BANKED  
-     _LINC                                     24DC      16      22       1   NON_BANKED  
-     _LADD                                     24F2       6       6       5   NON_BANKED  
-     _LMUL                                     24F8       6       6       4   NON_BANKED  
-     _LCMP_RC                                  24FE       6       6       1   NON_BANKED  
-     _COPY                                     2504      30      48       2   NON_BANKED  
-     _POP32                                    2534      1A      26       8   NON_BANKED  
-     _STORE32                                  254E      16      22       1   NON_BANKED  
-     _PUSH_CC                                  2564       F      15       1   NON_BANKED  
-     _POP_CC                                   2573       F      15       1   NON_BANKED  
+     _PUSH_ARGS_L                              237E      20      32       1   NON_BANKED  
+     _ENTER_UNARY_L                            239E      29      41       1   NON_BANKED  
+     _ENTER_BINARY_L_RC                        23C7      19      25       1   NON_BANKED  
+     _LCMP_k_rel_j                             23E0      1F      31       1   NON_BANKED  
+     _LINC                                     23FF      16      22       1   NON_BANKED  
+     _LCMP_RC                                  2415       6       6       1   NON_BANKED  
+     _STORE32                                  241B      16      22       1   NON_BANKED  
+     _PUSH_CC                                  2431       F      15       1   NON_BANKED  
+     _POP_CC                                   2440       F      15       1   NON_BANKED  
 - VARIABLES:
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  Events_c.obj                                 0     31      0
-  main_c.obj                                   3    247      0
+  Events_c.obj                                 0     42      0
+  main_c.obj                                   5    725      0
   start08_c.obj                                0    133      0
-  AS1_c.obj                                   24    433      0
-  AS2_c.obj                                   26    387      0
-  Cpu_c.obj                                    3    241      2
-  FC321_c.obj                                 13    321      0
+  AS1_c.obj                                   24    520      0
+  AS2_c.obj                                   26    663      0
+  Cpu_c.obj                                    3    245      2
+  FC321_c.obj                                  8    136      0
   IO_Map_c.obj                               207      0      0
   Inhr1_c.obj                                  0     26      0
   Inhr2_c.obj                                  0     26      0
   Inhr3_c.obj                                  0     26      0
   Inhr4_c.obj                                  0     26      0
   MBit1_c.obj                                  0     33      0
-  PE_Timer_c.obj                               0    402      0
   PWM1_c.obj                                   2    148      0
   TI1_c.obj                                    1     67      0
-  TI2_c.obj                                    2     56      0
+  TI2_c.obj                                    2     65      0
+  TI3_c.obj                                    0     29      0
   Vectors_c.obj                                0      0     64
-  rtshc08.o (ansibim.lib)                      0    525      0
+  rtshc08.o (ansibim.lib)                      0    209      0
   other                                      512     18      2
 
 *********************************************************************************************
@@ -638,35 +632,34 @@ SECTION USE IN OBJECT-ALLOCATION SECTION
 SECTION: ".text"
   AS1_OnError AS1_OnRxChar AS1_OnTxChar AS1_OnFullRxBuf AS1_OnFreeTxBuf 
   TI1_OnInterrupt TI2_OnInterrupt AS2_OnError AS2_OnRxChar AS2_OnTxChar 
-  AS2_OnFullRxBuf AS2_OnFreeTxBuf main PE_low_level_init Inhr1_PutVal 
-  Inhr2_PutVal Inhr3_PutVal Inhr4_PutVal MBit1_PutVal PE_Timer_LngMul 
-  PE_Timer_LngHi2 
+  AS2_OnFullRxBuf AS2_OnFreeTxBuf TI3_OnInterrupt main PE_low_level_init 
+  Inhr1_PutVal Inhr2_PutVal Inhr3_PutVal Inhr4_PutVal MBit1_PutVal 
 SECTION: ".bss"
-  flag flagser flagmotor SerFlag InpIndxR InpIndxW InpBuffer OutIndxR OutIndxW 
-  OutBuffer OnFreeTxBuf_semaphore SerFlag InpIndxR InpIndxW InpBuffer OutIndxR 
-  OutIndxW OutBuffer OnFreeTxBuf_semaphore EnUser TTicks LTicks TOvf LOvf 
-  CmpVal ActualRatio EnUser CmpVal 
+  flagusuario flagtorre flagser flagmotor flagespera SerFlag InpIndxR InpIndxW 
+  InpBuffer OutIndxR OutIndxW OutBuffer OnFreeTxBuf_semaphore SerFlag InpIndxR 
+  InpIndxW InpBuffer OutIndxR OutIndxW OutBuffer OnFreeTxBuf_semaphore EnUser 
+  TTicks TOvf CmpVal ActualRatio EnUser CmpVal 
 SECTION: ".init"
   Cpu_Interrupt _EntryPoint 
 SECTION: "NON_BANKED"
   loadByte Init _Startup AS1_InterruptRx AS1_InterruptTx AS1_InterruptError 
   AS2_InterruptRx AS2_InterruptTx AS2_InterruptError FC321_Interrupt 
-  TI1_Interrupt TI2_Interrupt _PUSH_ARGS_L _ENTER_UNARY_L _ENTER_BINARY_L 
-  _ENTER_BINARY_L_RC _LADD_k_is_k_plus_j _k_is_k_plus_j_l _k_is_k_plus_j_i 
-  _LMUL_k_is_k_mul_j _LCMP_k_rel_j _LINC _LADD _LMUL _LCMP_RC _COPY _POP32 
-  _STORE32 _PUSH_CC _POP_CC 
+  TI1_Interrupt TI2_Interrupt TI3_Interrupt _PUSH_ARGS_L _ENTER_UNARY_L 
+  _ENTER_BINARY_L_RC _LCMP_k_rel_j _LINC _LCMP_RC _STORE32 _PUSH_CC _POP_CC 
 SECTION: "AS1_CODE"
-  AS1_RecvChar AS1_SendChar AS1_Init 
+  AS1_RecvChar AS1_SendChar AS1_RecvBlock AS1_Init 
 SECTION: "AS2_CODE"
-  AS2_SendChar AS2_Init 
+  AS2_RecvChar AS2_RecvBlock AS2_SendBlock AS2_Init 
 SECTION: "PWM1_CODE"
   SetRatio PWM1_Init 
 SECTION: "TI1_CODE"
   HWEnDi TI1_Disable TI1_Init 
 SECTION: "FC321_CODE"
-  LoadTicks HWEnDi FC321_Reset FC321_GetTimeUS FC321_Init 
+  HWEnDi FC321_Init 
 SECTION: "TI2_CODE"
-  TI2_Init 
+  TI2_EnableEvent TI2_Init 
+SECTION: "TI3_CODE"
+  TI3_Init 
 SECTION: ".common"
   AS1_InpLen AS1_OutLen AS2_InpLen AS2_OutLen CCR_reg CCR_lock Shadow_PTD 
 SECTION: ".abs_section_ffbd"
@@ -1113,13 +1106,13 @@ OBJECT LIST SORTED BY ADDRESS
      _TPM2C0V                                    56       2       2       5   .abs_section_56
      _TPM2C1SC                                   58       1       1       0   .abs_section_58
      _TPM2C1V                                    59       2       2       0   .abs_section_59
-     _TPM2C2SC                                   5B       1       1       3   .abs_section_5b
+     _TPM2C2SC                                   5B       1       1       8   .abs_section_5b
      _TPM2C2V                                    5C       2       2       3   .abs_section_5c
-     _TPM3SC                                     60       1       1       0   .abs_section_60
-     _TPM3CNT                                    61       2       2       0   .abs_section_61
-     _TPM3MOD                                    63       2       2       0   .abs_section_63
-     _TPM3C0SC                                   65       1       1       0   .abs_section_65
-     _TPM3C0V                                    66       2       2       0   .abs_section_66
+     _TPM3SC                                     60       1       1       2   .abs_section_60
+     _TPM3CNT                                    61       2       2       1   .abs_section_61
+     _TPM3MOD                                    63       2       2       1   .abs_section_63
+     _TPM3C0SC                                   65       1       1       2   .abs_section_65
+     _TPM3C0V                                    66       2       2       2   .abs_section_66
      _TPM3C1SC                                   68       1       1       0   .abs_section_68
      _TPM3C1V                                    69       2       2       0   .abs_section_69
      _TPM3C2SC                                   6B       1       1       0   .abs_section_6b
@@ -1138,41 +1131,41 @@ OBJECT LIST SORTED BY ADDRESS
      _LBP                                        7D       1       1       0   .abs_section_7d
      _LB                                         7E       1       1       0   .abs_section_7e
      _LAPAB                                      7F       1       1       0   .abs_section_7f
-     flag                                        A0       1       1       3   .bss        
-     flagser                                     A1       1       1       2   .bss        
-     flagmotor                                   A2       1       1       3   .bss        
-     SerFlag                                     A3       1       1      10   .bss        
-     InpIndxR                                    A4       1       1       3   .bss        
-     InpIndxW                                    A5       1       1       3   .bss        
-     InpBuffer                                   A6       8       8       2   .bss        
-     OutIndxR                                    AE       1       1       3   .bss        
-     OutIndxW                                    AF       1       1       3   .bss        
-     OutBuffer                                   B0       8       8       2   .bss        
-     OnFreeTxBuf_semaphore                       B8       1       1       2   .bss        
-     SerFlag                                     B9       1       1       8   .bss        
-     InpIndxR                                    BA       1       1       1   .bss        
-     InpIndxW                                    BB       1       1       5   .bss        
-     InpBuffer                                   BC       9       9       1   .bss        
-     OutIndxR                                    C5       1       1       5   .bss        
-     OutIndxW                                    C6       1       1       5   .bss        
-     OutBuffer                                   C7       9       9       2   .bss        
-     OnFreeTxBuf_semaphore                       D0       1       1       2   .bss        
-     EnUser                                      D1       1       1       2   .bss        
-     TTicks                                      D2       4       4       7   .bss        
-     LTicks                                      D6       4       4       4   .bss        
-     TOvf                                        DA       1       1       4   .bss        
-     LOvf                                        DB       1       1       2   .bss        
-     CmpVal                                      DC       2       2       5   .bss        
-     ActualRatio                                 DE       2       2       5   .bss        
-     EnUser                                      E0       1       1       4   .bss        
-     CmpVal                                      E1       2       2       3   .bss        
-     AS1_InpLen                                  E3       1       1       7   .common     
-     AS1_OutLen                                  E4       1       1       5   .common     
-     AS2_InpLen                                  E5       1       1       4   .common     
-     AS2_OutLen                                  E6       1       1       5   .common     
-     CCR_reg                                     E7       1       1      10   .common     
-     CCR_lock                                    E8       1       1      21   .common     
-     Shadow_PTD                                  E9       1       1      13   .common     
+     flagusuario                                 A0       1       1       2   .bss        
+     flagtorre                                   A1       1       1       3   .bss        
+     flagser                                     A2       1       1       1   .bss        
+     flagmotor                                   A3       1       1       5   .bss        
+     flagespera                                  A4       1       1       3   .bss        
+     SerFlag                                     A5       1       1      10   .bss        
+     InpIndxR                                    A6       1       1       3   .bss        
+     InpIndxW                                    A7       1       1       3   .bss        
+     InpBuffer                                   A8       8       8       2   .bss        
+     OutIndxR                                    B0       1       1       3   .bss        
+     OutIndxW                                    B1       1       1       3   .bss        
+     OutBuffer                                   B2       8       8       2   .bss        
+     OnFreeTxBuf_semaphore                       BA       1       1       2   .bss        
+     SerFlag                                     BB       1       1      10   .bss        
+     InpIndxR                                    BC       1       1       5   .bss        
+     InpIndxW                                    BD       1       1       5   .bss        
+     InpBuffer                                   BE       9       9       2   .bss        
+     OutIndxR                                    C7       1       1       5   .bss        
+     OutIndxW                                    C8       1       1       5   .bss        
+     OutBuffer                                   C9       9       9       2   .bss        
+     OnFreeTxBuf_semaphore                       D2       1       1       5   .bss        
+     EnUser                                      D3       1       1       2   .bss        
+     TTicks                                      D4       4       4       3   .bss        
+     TOvf                                        D8       1       1       2   .bss        
+     CmpVal                                      D9       2       2       5   .bss        
+     ActualRatio                                 DB       2       2       5   .bss        
+     EnUser                                      DD       1       1       4   .bss        
+     CmpVal                                      DE       2       2       3   .bss        
+     AS1_InpLen                                  E0       1       1       7   .common     
+     AS1_OutLen                                  E1       1       1       5   .common     
+     AS2_InpLen                                  E2       1       1       8   .common     
+     AS2_OutLen                                  E3       1       1       6   .common     
+     CCR_reg                                     E4       1       1       8   .common     
+     CCR_lock                                    E5       1       1      17   .common     
+     Shadow_PTD                                  E6       1       1      13   .common     
      _SRS                                      1800       1       1       0   .abs_section_1800
      _SBDFR                                    1801       1       1       0   .abs_section_1801
      _SOPT1                                    1802       1       1       1   .abs_section_1802
@@ -1255,7 +1248,7 @@ OBJECT LIST SORTED BY ADDRESS
      _PTECLR                                   187B       1       1       0   .abs_section_187b
      _PTCTOG                                   187C       1       1       0   .abs_section_187c
      _PTETOG                                   187D       1       1       0   .abs_section_187d
-     Cpu_Interrupt                             2080       4       4      22   .init       
+     Cpu_Interrupt                             2080       4       4      21   .init       
      _EntryPoint                               2084      45      69       1   .init       
      loadByte                                  20DB       E      14       5   NON_BANKED  
      Init                                      20E9      6D     109       1   NON_BANKED  
@@ -1269,24 +1262,16 @@ OBJECT LIST SORTED BY ADDRESS
      FC321_Interrupt                           231D      30      48       1   NON_BANKED  
      TI1_Interrupt                             234D       E      14       1   NON_BANKED  
      TI2_Interrupt                             235B      1A      26       1   NON_BANKED  
-     _PUSH_ARGS_L                              2375      20      32       2   NON_BANKED  
-     _ENTER_UNARY_L                            2395      29      41       1   NON_BANKED  
-     _ENTER_BINARY_L                           23BE      16      22       2   NON_BANKED  
-     _ENTER_BINARY_L_RC                        23D4      19      25       1   NON_BANKED  
-     _LADD_k_is_k_plus_j                       23ED      1F      31       1   NON_BANKED  
-     _k_is_k_plus_j_l                          240C      1E      30       2   NON_BANKED  
-     _k_is_k_plus_j_i                          242A      12      18       3   NON_BANKED  
-     _LMUL_k_is_k_mul_j                        243C      81     129       1   NON_BANKED  
-     _LCMP_k_rel_j                             24BD      1F      31       1   NON_BANKED  
-     _LINC                                     24DC      16      22       1   NON_BANKED  
-     _LADD                                     24F2       6       6       5   NON_BANKED  
-     _LMUL                                     24F8       6       6       4   NON_BANKED  
-     _LCMP_RC                                  24FE       6       6       1   NON_BANKED  
-     _COPY                                     2504      30      48       2   NON_BANKED  
-     _POP32                                    2534      1A      26       8   NON_BANKED  
-     _STORE32                                  254E      16      22       1   NON_BANKED  
-     _PUSH_CC                                  2564       F      15       1   NON_BANKED  
-     _POP_CC                                   2573       F      15       1   NON_BANKED  
+     TI3_Interrupt                             2375       9       9       1   NON_BANKED  
+     _PUSH_ARGS_L                              237E      20      32       1   NON_BANKED  
+     _ENTER_UNARY_L                            239E      29      41       1   NON_BANKED  
+     _ENTER_BINARY_L_RC                        23C7      19      25       1   NON_BANKED  
+     _LCMP_k_rel_j                             23E0      1F      31       1   NON_BANKED  
+     _LINC                                     23FF      16      22       1   NON_BANKED  
+     _LCMP_RC                                  2415       6       6       1   NON_BANKED  
+     _STORE32                                  241B      16      22       1   NON_BANKED  
+     _PUSH_CC                                  2431       F      15       1   NON_BANKED  
+     _POP_CC                                   2440       F      15       1   NON_BANKED  
      AS1_OnError                               8000       1       1       4   .text       
      AS1_OnRxChar                              8001       6       6       2   .text       
      AS1_OnTxChar                              8007       1       1       2   .text       
@@ -1295,35 +1280,36 @@ OBJECT LIST SORTED BY ADDRESS
      TI1_OnInterrupt                           800A       A      10       2   .text       
      TI2_OnInterrupt                           8014       6       6       2   .text       
      AS2_OnError                               801A       1       1       4   .text       
-     AS2_OnRxChar                              801B       1       1       2   .text       
-     AS2_OnTxChar                              801C       1       1       2   .text       
-     AS2_OnFullRxBuf                           801D       1       1       2   .text       
-     AS2_OnFreeTxBuf                           801E       1       1       2   .text       
-     main                                      801F      F7     247       3   .text       
-     PE_low_level_init                         8116      A8     168       2   .text       
-     Inhr1_PutVal                              81BE      1A      26       2   .text       
-     Inhr2_PutVal                              81D8      1A      26       2   .text       
-     Inhr3_PutVal                              81F2      1A      26       2   .text       
-     Inhr4_PutVal                              820C      1A      26       2   .text       
-     MBit1_PutVal                              8226      21      33       2   .text       
-     PE_Timer_LngMul                           8247     14C     332       2   .text       
-     PE_Timer_LngHi2                           8393      46      70       2   .text       
-     AS1_RecvChar                              83D9      63      99       2   AS1_CODE    
-     AS1_SendChar                              843C      4A      74       2   AS1_CODE    
-     AS1_Init                                  8486      33      51       2   AS1_CODE    
-     AS2_SendChar                              84B9      59      89       2   AS2_CODE    
-     AS2_Init                                  8512      3E      62       2   AS2_CODE    
-     SetRatio                                  8550      7C     124       2   PWM1_CODE   
-     PWM1_Init                                 85CC      18      24       2   PWM1_CODE   
-     HWEnDi                                    85E4      12      18       4   TI1_CODE    
-     TI1_Disable                               85F6       F      15       2   TI1_CODE    
-     TI1_Init                                  8605      14      20       2   TI1_CODE    
-     LoadTicks                                 8619      34      52       2   FC321_CODE  
-     HWEnDi                                    864D      2C      44       4   FC321_CODE  
-     FC321_Reset                               8679      32      50       2   FC321_CODE  
-     FC321_GetTimeUS                           86AB      53      83       2   FC321_CODE  
-     FC321_Init                                86FE      2C      44       2   FC321_CODE  
-     TI2_Init                                  872A      1E      30       2   TI2_CODE    
+     AS2_OnRxChar                              801B       6       6       2   .text       
+     AS2_OnTxChar                              8021       1       1       2   .text       
+     AS2_OnFullRxBuf                           8022       1       1       2   .text       
+     AS2_OnFreeTxBuf                           8023       1       1       2   .text       
+     TI3_OnInterrupt                           8024       6       6       2   .text       
+     main                                      802A     2D5     725      25   .text       
+     PE_low_level_init                         82FF      AC     172       2   .text       
+     Inhr1_PutVal                              83AB      1A      26       2   .text       
+     Inhr2_PutVal                              83C5      1A      26       2   .text       
+     Inhr3_PutVal                              83DF      1A      26       2   .text       
+     Inhr4_PutVal                              83F9      1A      26       2   .text       
+     MBit1_PutVal                              8413      21      33       4   .text       
+     AS1_RecvChar                              8434      63      99       4   AS1_CODE    
+     AS1_SendChar                              8497      4A      74       2   AS1_CODE    
+     AS1_RecvBlock                             84E1      57      87       2   AS1_CODE    
+     AS1_Init                                  8538      33      51       2   AS1_CODE    
+     AS2_RecvChar                              856B      65     101       6   AS2_CODE    
+     AS2_RecvBlock                             85D0      57      87       4   AS2_CODE    
+     AS2_SendBlock                             8627      B1     177       5   AS2_CODE    
+     AS2_Init                                  86D8      3E      62       2   AS2_CODE    
+     SetRatio                                  8716      7C     124       2   PWM1_CODE   
+     PWM1_Init                                 8792      18      24       2   PWM1_CODE   
+     HWEnDi                                    87AA      12      18       4   TI1_CODE    
+     TI1_Disable                               87BC       F      15       2   TI1_CODE    
+     TI1_Init                                  87CB      14      20       2   TI1_CODE    
+     HWEnDi                                    87DF      2C      44       2   FC321_CODE  
+     FC321_Init                                880B      2C      44       2   FC321_CODE  
+     TI2_EnableEvent                           8837       9       9       4   TI2_CODE    
+     TI2_Init                                  8840      1E      30       2   TI2_CODE    
+     TI3_Init                                  885E      14      20       2   TI3_CODE    
      NVPROT_INIT                               FFBD       1       1       0   .abs_section_ffbd
      NVOPT_INIT                                FFBF       1       1       0   .abs_section_ffbf
      _vect                                     FFC0      40      64       0   .abs_section_ffc0
@@ -1333,11 +1319,12 @@ UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
 AS1_c.obj:
-  AS1_RecvBlock AS1_SendBlock AS1_ClearRxBuf AS1_ClearTxBuf 
+  AS1_SendBlock AS1_ClearRxBuf AS1_ClearTxBuf AS1_CharsInRxBuf 
 AS2_c.obj:
-  AS2_RecvChar AS2_RecvBlock AS2_SendBlock AS2_ClearRxBuf AS2_ClearTxBuf 
+  AS2_SendChar AS2_ClearRxBuf AS2_ClearTxBuf 
 FC321_c.obj:
-  FC321_Enable FC321_Disable FC321_GetTimeMS 
+  LoadTicks FC321_Enable FC321_Disable FC321_Reset FC321_GetTimeUS 
+  FC321_GetTimeMS 
 Inhr1_c.obj:
   Inhr1_SetDir Inhr1_SetOutput 
 Inhr2_c.obj:
@@ -1349,37 +1336,39 @@ Inhr4_c.obj:
 MBit1_c.obj:
   MBit1_SetDir MBit1_GetVal MBit1_GetBit MBit1_PutBit MBit1_SetBit 
   MBit1_ClrBit MBit1_NegBit 
-PE_Timer_c.obj:
-  PE_Timer_LngHi3 
 PWM1_c.obj:
   PWM1_SetRatio16 PWM1_SetDutyUS PWM1_SetDutyMS 
 TI1_c.obj:
   TI1_Enable TI1_EnableEvent 
 rtshc08.o (ansibim.lib):
-  _PUSH_ARGS_D _ENTER_UNARY_L64 _ENTER_UNARY_L64_4 _ENTER_BINARY_L_LC 
-  _ENTER_BINARY_L64 _ENTER_BINARY_L64_LC _ENTER_BINARY_L64_RC _IDIVMOD 
-  _SPLITSIGN _LSUB_k_is_k_minus_j _LAND_k_is_k_and_j _LOR_k_is_k_or_j 
-  _LXOR_k_is_k_xor_j _LDIVMOD _NEG_L_HX _ABS_L_HX _SPLITSIGN_L 
-  _LMODU_k_is_k_mod_j _LDIVU_k_is_k_div_j _LMODS_k_is_k_mod_j 
+  _PUSH_ARGS_D _ENTER_UNARY_L64 _ENTER_UNARY_L64_4 _ENTER_BINARY_L 
+  _ENTER_BINARY_L_LC _ENTER_BINARY_L64 _ENTER_BINARY_L64_LC 
+  _ENTER_BINARY_L64_RC _IDIVMOD _SPLITSIGN _LADD_k_is_k_plus_j _k_is_k_plus_j_l 
+  _k_is_k_plus_j_i _LSUB_k_is_k_minus_j _LAND_k_is_k_and_j _LOR_k_is_k_or_j 
+  _LXOR_k_is_k_xor_j _LMUL_k_is_k_mul_j _LDIVMOD _NEG_L_HX _ABS_L_HX 
+  _SPLITSIGN_L _LMODU_k_is_k_mod_j _LDIVU_k_is_k_div_j _LMODS_k_is_k_mod_j 
   _LDIVS_k_is_k_div_j _CMP24_k_rel_j _BMULS _BDIVS _BMODS _IMUL_STAR08 
   _IDIVS_STAR08 _IDIVU_STAR08 _IMODS_STAR08 _IMODU_STAR08 _IDIVU_8 _IMODU_8 
-  _IASR _ILSR _ILSL _ICMP _LDEC _LNEG _LNOT _LADD_RC _LSUB _LSUB_LC _LSUB_RC 
-  _LAND _LAND_RC _LOR _LOR_RC _LXOR _LXOR_RC _LMUL_RC _LDIVS _LDIVS_LC 
-  _LDIVS_RC _LDIVU _LDIVU_LC _LDIVU_RC _LMODS _LMODS_LC _LMODS_RC _LMODU 
-  _LMODU_LC _LMODU_RC _LASR _LLSR _LLSL _LCMP _PUSH_ARGS_24 _ENTER_BINARY_24_RC 
-  _ENTER_BINARY_24 _CMP24 _CMP24_RC _COPY_L _POP64 _STORE64 _SEXT8_32 
-  _SEXT16_32 _CALL_STAR08 _CALL_STAR08_FAR _Jump_Table_Addr _Jump_Table_Offset 
-  _Jump_Table_Header_Addr _Jump_Table_Header_Offset _Search_Table_16_Addr 
-  _Search_Table_16_Offset _Search_Table_8_Addr _Search_Table_8_Offset 
-  _CONV_FAR_TO_NEAR _CONV_FAR_TO_LINEAR _CONV_LINEAR_TO_FAR 
+  _IASR _ILSR _ILSL _ICMP _LDEC _LNEG _LNOT _LADD _LADD_RC _LSUB _LSUB_LC 
+  _LSUB_RC _LAND _LAND_RC _LOR _LOR_RC _LXOR _LXOR_RC _LMUL _LMUL_RC _LDIVS 
+  _LDIVS_LC _LDIVS_RC _LDIVU _LDIVU_LC _LDIVU_RC _LMODS _LMODS_LC _LMODS_RC 
+  _LMODU _LMODU_LC _LMODU_RC _LASR _LLSR _LLSL _LCMP _PUSH_ARGS_24 
+  _ENTER_BINARY_24_RC _ENTER_BINARY_24 _CMP24 _CMP24_RC _COPY _COPY_L _POP32 
+  _POP64 _STORE64 _SEXT8_32 _SEXT16_32 _CALL_STAR08 _CALL_STAR08_FAR 
+  _Jump_Table_Addr _Jump_Table_Offset _Jump_Table_Header_Addr 
+  _Jump_Table_Header_Offset _Search_Table_16_Addr _Search_Table_16_Offset 
+  _Search_Table_8_Addr _Search_Table_8_Offset _CONV_FAR_TO_NEAR 
+  _CONV_FAR_TO_LINEAR _CONV_LINEAR_TO_FAR 
 NOT USED VARIABLES
+FC321_c.obj:
+  LTicks LOvf 
 rtshc08.o (ansibim.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0x2582 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0x244F ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1406,41 +1395,44 @@ FC321_Interrupt           USES _TPM2C0SC _TPM2C0V CmpVal TTicks _LINC _STORE32
                                 _LCMP_RC TOvf 
 TI1_Interrupt             USES _RTCSC TI1_OnInterrupt 
 TI2_Interrupt             USES _TPM2C2SC _TPM2C2V CmpVal TI2_OnInterrupt 
-_ENTER_BINARY_L           USES _PUSH_ARGS_L 
+TI3_Interrupt             USES _TPM3C0SC TI3_OnInterrupt 
 _ENTER_BINARY_L_RC        USES _PUSH_ARGS_L 
-_LMUL_k_is_k_mul_j        USES _k_is_k_plus_j_l _k_is_k_plus_j_i 
 _LINC                     USES _ENTER_UNARY_L 
-_LADD                     USES _ENTER_BINARY_L _LADD_k_is_k_plus_j 
-_LMUL                     USES _ENTER_BINARY_L _LMUL_k_is_k_mul_j 
 _LCMP_RC                  USES _ENTER_BINARY_L_RC _LCMP_k_rel_j 
-AS1_OnRxChar              USES flag 
+AS1_OnRxChar              USES flagusuario 
 TI1_OnInterrupt           USES flagser TI1_Disable 
 TI2_OnInterrupt           USES flagmotor 
-main                      USES PE_low_level_init flag AS1_RecvChar 
-                                AS1_SendChar AS1_InpLen FC321_GetTimeUS flagser 
-                                AS2_SendChar FC321_Reset flagmotor MBit1_PutVal main 
+AS2_OnRxChar              USES flagtorre 
+TI3_OnInterrupt           USES flagespera 
+main                      USES PE_low_level_init flagusuario AS1_RecvChar 
+                                AS1_InpLen AS1_RecvBlock main TI2_EnableEvent flagmotor 
+                                MBit1_PutVal _TPM2C2SC flagespera AS2_SendBlock flagtorre 
+                                AS2_RecvChar AS2_InpLen AS2_RecvBlock AS1_SendChar 
 PE_low_level_init         USES _SCGC1 _SCGC2 _PTBDD _PTBD _PTCDD _PTCD _PTADD 
                                 _PTAD _PTDD _PTDPE _PTDDD _PTASE _PTBSE _PTCSE 
                                 _PTDSE _PTESE _PTFSE _PTGSE _PTHSE _PTJSE _PTADS 
                                 _PTBDS _PTCDS _PTDDS _PTEDS _PTFDS _PTGDS _PTHDS 
                                 _PTJDS AS1_Init AS2_Init PWM1_Init TI1_Init 
-                                FC321_Init Shadow_PTD TI2_Init _TPM2SC CCR_lock 
+                                FC321_Init Shadow_PTD TI2_Init TI3_Init _TPM2SC CCR_lock 
 Inhr1_PutVal              USES _PTDD Shadow_PTD 
 Inhr2_PutVal              USES _PTDD Shadow_PTD 
 Inhr3_PutVal              USES _PTDD Shadow_PTD 
 Inhr4_PutVal              USES _PTDD Shadow_PTD 
 MBit1_PutVal              USES Inhr1_PutVal Inhr2_PutVal Inhr3_PutVal 
                                 Inhr4_PutVal 
-PE_Timer_LngMul           USES _LMUL _POP32 _LADD _COPY 
 AS1_RecvChar              USES AS1_InpLen CCR_lock CCR_reg InpIndxR InpBuffer 
                                 SerFlag _PUSH_CC _POP_CC 
 AS1_SendChar              USES AS1_OutLen CCR_lock CCR_reg OutIndxW OutBuffer 
                                 _SCI1C2 
+AS1_RecvBlock             USES AS1_RecvChar 
 AS1_Init                  USES SerFlag OnFreeTxBuf_semaphore AS1_InpLen 
                                 InpIndxR InpIndxW AS1_OutLen OutIndxR OutIndxW _SCI1C1 
                                 _SCI1C3 _SCI1C2 _SCI1S2 _SCI1BD 
-AS2_SendChar              USES AS2_OutLen CCR_lock CCR_reg OutIndxW OutBuffer 
-                                _SCI2C2 
+AS2_RecvChar              USES AS2_InpLen CCR_lock CCR_reg InpIndxR InpBuffer 
+                                SerFlag 
+AS2_RecvBlock             USES AS2_RecvChar 
+AS2_SendBlock             USES OnFreeTxBuf_semaphore CCR_lock CCR_reg 
+                                AS2_OutLen OutIndxW OutBuffer _SCI2C2 AS2_SendBlock 
 AS2_Init                  USES SerFlag OnFreeTxBuf_semaphore AS2_InpLen 
                                 InpIndxR InpIndxW AS2_OutLen OutIndxR OutIndxW _SCI2C1 
                                 _SCI2C3 _SCI2C2 _SCI2S2 _SCI2BD 
@@ -1449,18 +1441,16 @@ PWM1_Init                 USES _TPM1SC _TPM1C2SC ActualRatio _TPM1MOD SetRatio
 HWEnDi                    USES EnUser _RTCSC 
 TI1_Disable               USES EnUser HWEnDi 
 TI1_Init                  USES _RTCSC EnUser _RTCMOD HWEnDi 
-LoadTicks                 USES CCR_lock CCR_reg TTicks LTicks TOvf LOvf 
 HWEnDi                    USES EnUser _TPM2CNT CmpVal _TPM2C0V _TPM2C0SC 
-FC321_Reset               USES CCR_lock CCR_reg HWEnDi TTicks TOvf 
-FC321_GetTimeUS           USES LoadTicks LOvf LTicks PE_Timer_LngMul 
-                                PE_Timer_LngHi2 
 FC321_Init                USES _TPM2SC _TPM2MOD _TPM2C0SC EnUser TTicks TOvf 
                                 CmpVal _TPM2C0V HWEnDi 
+TI2_EnableEvent           USES _TPM2C2SC 
 TI2_Init                  USES _TPM2C2SC _TPM2CNT _TPM2C2V CmpVal 
-_vect                     USES Cpu_Interrupt TI1_Interrupt AS2_InterruptTx 
-                                AS2_InterruptRx AS2_InterruptError AS1_InterruptTx 
-                                AS1_InterruptRx AS1_InterruptError TI2_Interrupt 
-                                FC321_Interrupt _EntryPoint 
+TI3_Init                  USES _TPM3SC _TPM3C0SC _TPM3C0V _TPM3MOD _TPM3CNT 
+_vect                     USES Cpu_Interrupt TI3_Interrupt TI1_Interrupt 
+                                AS2_InterruptTx AS2_InterruptRx AS2_InterruptError 
+                                AS1_InterruptTx AS1_InterruptRx AS1_InterruptError 
+                                TI2_Interrupt FC321_Interrupt _EntryPoint 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -1488,6 +1478,8 @@ DEPENDENCY TREE
  |  |  |  +- HWEnDi              
  |  |  |       
  |  |  +- TI2_Init            
+ |  |  |    
+ |  |  +- TI3_Init            
  |  |       
  |  +- AS1_RecvChar        
  |  |  | 
@@ -1495,54 +1487,32 @@ DEPENDENCY TREE
  |  |  |    
  |  |  +- _POP_CC             
  |  |       
- |  +- AS1_SendChar        
- |  |    
- |  +- FC321_GetTimeUS     
+ |  +- AS1_RecvBlock       
  |  |  | 
- |  |  +- LoadTicks           
- |  |  |    
- |  |  +- PE_Timer_LngMul     
- |  |  |  | 
- |  |  |  +- _LMUL               
- |  |  |  |  | 
- |  |  |  |  +- _ENTER_BINARY_L     
- |  |  |  |  |  | 
- |  |  |  |  |  +- _PUSH_ARGS_L        
- |  |  |  |  |       
- |  |  |  |  +- _LMUL_k_is_k_mul_j  
- |  |  |  |     | 
- |  |  |  |     +- _k_is_k_plus_j_l    
- |  |  |  |     |    
- |  |  |  |     +- _k_is_k_plus_j_i    
- |  |  |  |          
- |  |  |  +- _POP32              
- |  |  |  |    
- |  |  |  +- _LADD               
- |  |  |  |  | 
- |  |  |  |  +- _ENTER_BINARY_L      (see above)
- |  |  |  |  |  
- |  |  |  |  +- _LADD_k_is_k_plus_j 
- |  |  |  |       
- |  |  |  +- _COPY               
- |  |  |       
- |  |  +- PE_Timer_LngHi2     
- |  |       
- |  +- AS2_SendChar        
- |  |    
- |  +- FC321_Reset         
- |  |  | 
- |  |  +- HWEnDi               (see above)
+ |  |  +- AS1_RecvChar         (see above)
  |  |     
+ |  +- TI2_EnableEvent     
+ |  |    
  |  +- MBit1_PutVal        
- |     | 
- |     +- Inhr1_PutVal        
- |     |    
- |     +- Inhr2_PutVal        
- |     |    
- |     +- Inhr3_PutVal        
- |     |    
- |     +- Inhr4_PutVal        
- |          
+ |  |  | 
+ |  |  +- Inhr1_PutVal        
+ |  |  |    
+ |  |  +- Inhr2_PutVal        
+ |  |  |    
+ |  |  +- Inhr3_PutVal        
+ |  |  |    
+ |  |  +- Inhr4_PutVal        
+ |  |       
+ |  +- AS2_SendBlock       
+ |  |    
+ |  +- AS2_RecvChar        
+ |  |    
+ |  +- AS2_RecvBlock       
+ |  |  | 
+ |  |  +- AS2_RecvChar         (see above)
+ |  |     
+ |  +- AS1_SendChar        
+ |       
  +- _EntryPoint         
     | 
     +- _Startup            
@@ -1557,6 +1527,10 @@ DEPENDENCY TREE
  | 
  +- Cpu_Interrupt       
  |    
+ +- TI3_Interrupt       
+ |  | 
+ |  +- TI3_OnInterrupt     
+ |       
  +- TI1_Interrupt       
  |  | 
  |  +- TI1_OnInterrupt     
@@ -1617,8 +1591,8 @@ DEPENDENCY TREE
  |     | 
  |     +- _ENTER_BINARY_L_RC  
  |     |  | 
- |     |  +- _PUSH_ARGS_L         (see above)
- |     |     
+ |     |  +- _PUSH_ARGS_L        
+ |     |       
  |     +- _LCMP_k_rel_j       
  |          
  +- _EntryPoint          (see above)
@@ -1629,6 +1603,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 12
-Total size of all blocks to be downloaded: 3214
+Number of blocks to be downloaded: 11
+Total size of all blocks to be downloaded: 3205
 

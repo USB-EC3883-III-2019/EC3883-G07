@@ -6,7 +6,7 @@
 **     Component   : AsynchroSerial
 **     Version     : Component 02.611, Driver 01.33, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-04, 13:50, # CodeGen: 1
+**     Date/Time   : 2019-11-13, 11:47, # CodeGen: 36
 **     Abstract    :
 **         This component "AsynchroSerial" implements an asynchronous serial
 **         communication. The component supports different settings of
@@ -59,6 +59,7 @@
 **         SendBlock       - byte AS1_SendBlock(AS1_TComData *Ptr, word Size, word *Snd);
 **         ClearRxBuf      - byte AS1_ClearRxBuf(void);
 **         ClearTxBuf      - byte AS1_ClearTxBuf(void);
+**         CharsInRxBuf    - byte AS1_CharsInRxBuf(word *Chr);
 **         GetCharsInRxBuf - word AS1_GetCharsInRxBuf(void);
 **         GetCharsInTxBuf - word AS1_GetCharsInTxBuf(void);
 **
@@ -296,6 +297,26 @@ byte AS1_ClearTxBuf(void);
 **         output buffer is defined and the receiver property is
 **         enabled.
 **     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+
+byte  AS1_CharsInRxBuf(word *Chr);
+/*
+** ===================================================================
+**     Method      :  AS1_CharsInRxBuf (component AsynchroSerial)
+**     Description :
+**         Returns the number of characters in the input buffer. This
+**         method is available only if the receiver property is enabled.
+**         [deprecated method]
+**     Parameters  :
+**         NAME            - DESCRIPTION
+**       * Chr             - Pointer to the number of characters in the
+**                           input buffer
 **     Returns     :
 **         ---             - Error code, possible codes:
 **                           ERR_OK - OK

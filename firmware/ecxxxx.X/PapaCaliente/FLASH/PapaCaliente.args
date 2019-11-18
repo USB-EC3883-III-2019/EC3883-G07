@@ -21,5 +21,6 @@
 "$(ProjDirPath)/FLASH/Generated_Code/PWM1_c.obj"
 "$(ProjDirPath)/FLASH/Generated_Code/TI1_c.obj"
 "$(ProjDirPath)/FLASH/Generated_Code/TI2_c.obj"
+"$(ProjDirPath)/FLASH/Generated_Code/TI3_c.obj"
 "$(ProjDirPath)/FLASH/Generated_Code/Vectors_c.obj"
 "$(MCUToolsBaseDirEnv)/lib/hc08c/lib/ansibim.lib" )
