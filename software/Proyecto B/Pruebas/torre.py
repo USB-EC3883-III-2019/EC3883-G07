@@ -92,7 +92,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 			if self.env:
 				self.Msg.setPlainText("NO PUEDES HACER NADA COMO ESCLAVO")
 				#Entramado Esclavo
-				self.datos[0] = 128|(1<<6)
+				self.datos[0] = 128|(1<<5)
 				self.datos[1] = 0
 				self.datos[2] = 0
 				self.datos[3] = 0
