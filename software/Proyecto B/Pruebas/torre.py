@@ -28,8 +28,8 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 		self.Z4 = 0
 		self.msg = " "
 		self.msgr = " "
-		self.datos = np.zeros(4)
-
+		self.datos = np.array([0, 0, 0 ,0],dtype=np.uint8)
+		
 		# Funciones
 		self.Modo.setStatusTip("Maestro/Esclavo")
 		self.Modo.activated[str].connect(self.Mode)
@@ -48,7 +48,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
 	def Torre(self):
 		if self.mode:
-			print('Maestro')
+			#print('Maestro')
 			if self.env:
 				self.MsgR.clear()
 				self.Z0 = self.Zona0.value()
@@ -63,40 +63,40 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 				elif self.Nsaltos.value()==3:
 					self.Z4 = 0
 
-				print('Zona 1: '+str(self.Z1)+', Zona 2: '+str(self.Z2)+', Zona 3: '+str(self.Z3)+', Zona 4: '+str(self.Z4))
+				#print('Zona 1: '+str(self.Z1)+', Zona 2: '+str(self.Z2)+', Zona 3: '+str(self.Z3)+', Zona 4: '+str(self.Z4))
 				self.msg = self.Msg.toPlainText()
 				self.env = False
 				if len(self.msg)==1:
-					print(self.msg)
-										
 					# Entramado
 					self.msg = self.msg.toUtf8().data() #Si se usa una version distinta de Python 2.7, ignorar esta linea
+					
 					self.datos[0] = 128|((ord(self.msg)&240)>>4)
 					self.datos[1] = ord(self.msg)&15 | self.Z0<<4
 					self.datos[2] = (self.Z1<<3) | self.Z2
 					self.datos[3] = (self.Z3<<3) | self.Z4
-					for i in range(0,4):
-						print(self.datos[i])
+					
+					#for i in range(0,4):
+					#	print(self.datos[i])
 					s.write(self.datos)
+
 				else:
 					self.Msg.setPlainText("Ingrese UN caracter")
 
-			print(str(s.in_waiting) + "\n")
+			#print(str(s.in_waiting) + "\n")
 			if s.in_waiting:
 				self.msgr = s.read(1)
-				self.MsgR.setPlainText(self.msg)
+				self.MsgR.setPlainText(self.msgr)
 
 		else:
-			print('Esclavo \n')
+			#print('Esclavo \n')
 			if self.env:
 				self.Msg.setPlainText("NO PUEDES HACER NADA COMO ESCLAVO")
-
-			#Entramado Esclavo
-			self.datos[0] = 128|(1<<6)
-			self.datos[1] = 0
-			self.datos[2] = 0
-			self.datos[3] = 0
-			s.write(self.datos)
+				#Entramado Esclavo
+				self.datos[0] = 128|(1<<6)
+				self.datos[1] = 0
+				self.datos[2] = 0
+				self.datos[3] = 0
+				s.write(self.datos)
 
 	def Env(self):
 		self.env = True
