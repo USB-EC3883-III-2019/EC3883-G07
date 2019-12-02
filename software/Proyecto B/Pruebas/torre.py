@@ -100,6 +100,11 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 				self.datos[3] = 0
 				s.write(self.datos)
 
+			if s.in_waiting:
+				datos = s.read(4)
+				self.msgr = ((ord(datos[0])&15)<<4)|ord(datos[1])&15
+				self.MsgR.setPlainText("Mensaje recibido: "+chr(self.msgr))
+
 	def Env(self):
 		self.env = True
 
