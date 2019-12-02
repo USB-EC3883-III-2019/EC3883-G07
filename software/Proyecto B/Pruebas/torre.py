@@ -56,11 +56,12 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 				self.Z2 = self.Zona2.value()
 				self.Z3 = self.Zona3.value()
 				self.Z4 = self.Zona4.value()
-				if self.Nsaltos.value()==1:
+				Saltos = self.Nsaltos.value()
+				if Saltos==1:
 					self.Z2 = self.Z3 = self.Z4 = 0
-				elif self.Nsaltos.value()==2:
+				elif Saltos==2:
 					self.Z3 = self.Z4 = 0
-				elif self.Nsaltos.value()==3:
+				elif Saltos==3:
 					self.Z4 = 0
 
 				#print('Zona 1: '+str(self.Z1)+', Zona 2: '+str(self.Z2)+', Zona 3: '+str(self.Z3)+', Zona 4: '+str(self.Z4))
@@ -84,8 +85,9 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
 
 			#print(str(s.in_waiting) + "\n")
 			if s.in_waiting:
-				self.msgr = s.read(1)
-				self.MsgR.setPlainText(self.msgr)
+				datos = s.read(4)
+				self.msgr = ((ord(datos[0])&15)<<4)|ord(datos[1])&15
+				self.MsgR.setPlainText(chr(self.msgr))
 
 		else:
 			#print('Esclavo \n')
