@@ -121,6 +121,18 @@ Module "TI2"       (component TimerInt)
    - TI2_DisableEvent -This method disables the events.
 
 Module "TI3"       (component TimerInt)
+   - TI3_Enable -This method enables the component - it starts the timer. Events may be generated (<DisableEvent>/<EnableEvent>)
+                .
+
+Module "TI4"       (component TimerInt)
+   - TI4_Enable -This method enables the component - it starts the timer. Events may be generated (<DisableEvent>/<EnableEvent>)
+                .
+   - TI4_Disable -This method disables the component - it stops the timer. No events will be generated.
+
+Module "TI5"       (component TimerInt)
+   - TI5_Enable -This method enables the component - it starts the timer. Events may be generated (<DisableEvent>/<EnableEvent>)
+                .
+   - TI5_Disable -This method disables the component - it stops the timer. No events will be generated.
 
 Module "Cpu"       (component MC9S08QE128_80)
    - Cpu_EnableInt -Enables maskable interrupts

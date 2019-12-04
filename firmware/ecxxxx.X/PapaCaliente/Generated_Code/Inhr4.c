@@ -6,7 +6,7 @@
 **     Component   : BitIO
 **     Version     : Component 02.086, Driver 03.27, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-11, 12:50, # CodeGen: 29
+**     Date/Time   : 2019-11-20, 10:40, # CodeGen: 40
 **     Abstract    :
 **         This component "BitIO" implements an one-bit input/output.
 **         It uses one bit/pin of a port.
@@ -17,13 +17,13 @@
 **             ----------------------------------------------------
 **                Number (on package)  |    Name
 **             ----------------------------------------------------
-**                       26            |  PTD7_KBI2P7
+**                       28            |  PTD5_KBI2P5
 **             ----------------------------------------------------
 **
 **         Port name                   : PTD
 **
-**         Bit number (in port)        : 7
-**         Bit mask of the port        : $0080
+**         Bit number (in port)        : 5
+**         Bit mask of the port        : $0020
 **
 **         Initial direction           : Output (direction can be changed)
 **         Safe mode                   : yes
@@ -147,11 +147,11 @@ bool Inhr4_GetVal(void)
 void Inhr4_PutVal(bool Val)
 {
   if (Val) {
-    setReg8Bits(PTDD, 0x80U);          /* PTDD7=0x01U */
-    Shadow_PTD |= 0x80U;               /* Set-up shadow variable */
+    setReg8Bits(PTDD, 0x20U);          /* PTDD5=0x01U */
+    Shadow_PTD |= 0x20U;               /* Set-up shadow variable */
   } else { /* !Val */
-    clrReg8Bits(PTDD, 0x80U);          /* PTDD7=0x00U */
-    Shadow_PTD &= 0x7FU;               /* Set-up shadow variable */
+    clrReg8Bits(PTDD, 0x20U);          /* PTDD5=0x00U */
+    Shadow_PTD &= 0xDFU;               /* Set-up shadow variable */
   } /* !Val */
 }
 
@@ -253,10 +253,10 @@ bool Inhr4_GetDir(void)
 void Inhr4_SetDir(bool Dir)
 {
   if (Dir) {
-    setReg8(PTDD, (getReg8(PTDD) & (byte)(~(byte)0x80U)) | (Shadow_PTD & 0x80U)); /* PTDD7=Shadow_PTD[bit 7] */
-    setReg8Bits(PTDDD, 0x80U);         /* PTDDD7=0x01U */
+    setReg8(PTDD, (getReg8(PTDD) & (byte)(~(byte)0x20U)) | (Shadow_PTD & 0x20U)); /* PTDD5=Shadow_PTD[bit 5] */
+    setReg8Bits(PTDDD, 0x20U);         /* PTDDD5=0x01U */
   } else { /* !Dir */
-    clrReg8Bits(PTDDD, 0x80U);         /* PTDDD7=0x00U */
+    clrReg8Bits(PTDDD, 0x20U);         /* PTDDD5=0x00U */
   } /* !Dir */
 }
 
@@ -286,8 +286,8 @@ void Inhr4_SetInput(void)
 */
 void Inhr4_SetOutput(void)
 {
-  setReg8(PTDD, (getReg8(PTDD) & (byte)(~(byte)0x80U)) | (Shadow_PTD & 0x80U)); /* PTDD7=Shadow_PTD[bit 7] */
-  setReg8Bits(PTDDD, 0x80U);           /* PTDDD7=0x01U */
+  setReg8(PTDD, (getReg8(PTDD) & (byte)(~(byte)0x20U)) | (Shadow_PTD & 0x20U)); /* PTDD5=Shadow_PTD[bit 5] */
+  setReg8Bits(PTDDD, 0x20U);           /* PTDDD5=0x01U */
 }
 
 

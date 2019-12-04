@@ -6,7 +6,7 @@
 **     Component   : TimerInt
 **     Version     : Component 02.161, Driver 01.23, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-18, 15:32, # CodeGen: 39
+**     Date/Time   : 2019-12-02, 15:05, # CodeGen: 59
 **     Abstract    :
 **         This component "TimerInt" implements a periodic interrupt.
 **         When the component and its events are enabled, the "OnInterrupt"
@@ -17,7 +17,7 @@
 **     Settings    :
 **         Timer name                  : TPM3 (16-bit)
 **         Compare name                : TPM30
-**         Counter shared              : No
+**         Counter shared              : Yes
 **
 **         High speed mode
 **             Prescaler               : divide-by-64
@@ -47,7 +47,7 @@
 **         Flip-flop registers
 **              Mode                   : TPM3C0SC  [$0065]
 **     Contents    :
-**         No public methods
+**         Enable - byte TI3_Enable(void);
 **
 **     Copyright : 1997 - 2014 Freescale Semiconductor, Inc. 
 **     All Rights Reserved.
@@ -107,6 +107,7 @@
 #pragma MESSAGE DISABLE C4002          /* Disable warning C4002 "Result not used" */
 #pragma CODE_SEG TI3_CODE
 
+static word CmpVal;                    /* Value added to compare register in ISR */
 /*** Internal macros and method prototypes ***/
 
 /*
@@ -120,10 +121,67 @@
 ** ===================================================================
 */
 #define TI3_SetCV(_Val) ( \
-  TPM3MOD = (TPM3C0V = (word)(_Val)) )
+  ((TPM3C0V = (word)(TPM3CNT + (_Val)),((CmpVal = (_Val))))))
+
+/*
+** ===================================================================
+**     Method      :  HWEnDi (component TimerInt)
+**
+**     Description :
+**         Enables or disables the peripheral(s) associated with the 
+**         component. The method is called automatically as a part of the 
+**         Enable and Disable methods and several internal methods.
+**         This method is internal. It is used by Processor Expert only.
+** ===================================================================
+*/
+static void HWEnDi(void);
 
 
 /*** End of internal method prototypes ***/
+
+/*
+** ===================================================================
+**     Method      :  HWEnDi (component TimerInt)
+**
+**     Description :
+**         Enables or disables the peripheral(s) associated with the 
+**         component. The method is called automatically as a part of the 
+**         Enable and Disable methods and several internal methods.
+**         This method is internal. It is used by Processor Expert only.
+** ===================================================================
+*/
+static void HWEnDi(void)
+{
+  word TmpCmpVal;                      /* Temporary variable for compare value */
+
+  TmpCmpVal = (word)(TPM3CNT + CmpVal); /* Count current value for the compare register */
+  TPM3C0V = TmpCmpVal;                 /* Set compare register */
+  while (TPM3C0V != TmpCmpVal) {}      /* Wait for register update (because of Latching mechanism) */
+  /* TPM3C0SC: CH0F=0 */
+  clrReg8Bits(TPM3C0SC, 0x80U);        /* Reset request flag */ 
+  /* TPM3C0SC: CH0IE=1 */
+  setReg8Bits(TPM3C0SC, 0x40U);        /* Enable compare interrupt */ 
+}
+
+/*
+** ===================================================================
+**     Method      :  TI3_Enable (component TimerInt)
+**     Description :
+**         This method enables the component - it starts the timer.
+**         Events may be generated (<DisableEvent>/<EnableEvent>).
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+byte TI3_Enable(void)
+{
+  HWEnDi();                            /* Enable the device */
+  return ERR_OK;                       /* OK */
+}
 
 /*
 ** ===================================================================
@@ -140,13 +198,13 @@ void TI3_Init(void)
 {
   /* TPM3SC: TOF=0,TOIE=0,CPWMS=0,CLKSB=0,CLKSA=0,PS2=0,PS1=0,PS0=0 */
   setReg8(TPM3SC, 0x00U);              /* Stop HW; disable overflow interrupt and set prescaler to 0 */ 
-  /* TPM3C0SC: CH0F=0,CH0IE=1,MS0B=0,MS0A=1,ELS0B=0,ELS0A=0,??=0,??=0 */
-  setReg8(TPM3C0SC, 0x50U);            /* Set output compare mode and enable compare interrupt */ 
-  TI3_SetCV(0xE3FFU);                  /* Initialize appropriate value to the compare/modulo/reload register */
-  /* TPM3CNTH: BIT15=0,BIT14=0,BIT13=0,BIT12=0,BIT11=0,BIT10=0,BIT9=0,BIT8=0 */
-  setReg8(TPM3CNTH, 0x00U);            /* Reset HW Counter */ 
-  /* TPM3SC: TOF=0,TOIE=0,CPWMS=0,CLKSB=0,CLKSA=1,PS2=1,PS1=1,PS0=0 */
-  setReg8(TPM3SC, 0x0EU);              /* Set prescaler and run counter */ 
+  /* TPM3MOD: BIT15=0,BIT14=0,BIT13=0,BIT12=0,BIT11=0,BIT10=0,BIT9=0,BIT8=0,BIT7=0,BIT6=0,BIT5=0,BIT4=0,BIT3=0,BIT2=0,BIT1=0,BIT0=0 */
+  setReg16(TPM3MOD, 0x00U);            /* Clear modulo register: e.g. set free-running mode */ 
+  /* TPM3C0SC: CH0F=0,CH0IE=0,MS0B=0,MS0A=1,ELS0B=0,ELS0A=0,??=0,??=0 */
+  setReg8(TPM3C0SC, 0x10U);            /* Set output compare mode and disable compare interrupt */ 
+  TI3_SetCV(0xE400U);                  /* Initialize appropriate value to the compare/modulo/reload register */
+  clrSetReg8Bits(TPM3SC, 0x01U, 0x06U); /* Set prescaler */
+  HWEnDi();
 }
 
 
@@ -165,6 +223,7 @@ ISR(TI3_Interrupt)
 {
   /* TPM3C0SC: CH0F=0 */
   clrReg8Bits(TPM3C0SC, 0x80U);        /* Reset compare interrupt request flag */ 
+  TPM3C0V += CmpVal;                   /* Set new value to the compare register */
   TI3_OnInterrupt();                   /* Invoke user event */
 }
 
