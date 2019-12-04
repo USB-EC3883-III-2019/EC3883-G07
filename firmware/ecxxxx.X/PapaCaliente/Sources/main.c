@@ -56,12 +56,12 @@ char flagtorre=0;
 char flagser=0;
 char flagmotor=0;
 char flagespera = 0;
-char flagignore = 0;
+char enviando = 0;
 char flagmove = 0;
 
 void main(void)
 {
-	char carac,caracoriginal,prueba=0b00001111, error,esperando=0, encabezado=0, mensaje[4], recibido[4]={0,0,0,0};
+	char carac,caracoriginal,prueba=0b00001111, error, encabezado=0, mensaje[4], recibido[4]={0,0,0,0}, recibiendo;
 	char bloque[4] = {0,0,0,0};
 	char step=1, sentido = 1, posicion = 40, stepmax = 9, zona, i;
 	char zonas[6] = {7, 20, 33, 46, 59, 72};
@@ -122,25 +122,20 @@ void main(void)
 			
 			if(flagespera){
 				flagespera = 0;
-				flagignore = 1;
 				AS2_SendBlock(mensaje, 4, send);
-				TI4_Enable();
 			}
 			if(flagtorre){
 				if(AS2_GetCharsInRxBuf()>=4){
 					AS2_RecvBlock(recibido, 4, send);
 					flagtorre = 0;
-					if(!flagignore){
 						if(recibido[0]>127 && recibido[1]<128 && !recibido[2] && !recibido[3]){
 							carac = ((recibido[0]&0b00001111)<<4)|(recibido[1]&0b00001111);
 							if(carac==caracoriginal){
 								AS1_SendBlock(recibido, 4, send);
 								maestro = 0;
-								TI4_Disable();
 							}
 						}
 						else AS2_RecvChar(&error);	
-					}
 				}
 			}			
 		}
@@ -148,23 +143,23 @@ void main(void)
 //ESCLAVO		
 		if(esclavo){
 			if(flagtorre){
-				if(AS2_GetCharsInRxBuf()>=4){
-					//AS2_RecvChar(&recibido[0]);
-					//while(recibido[0]<127)AS2_RecvChar(&recibido[0]);
+				if(AS2_GetCharsInRxBuf()>=5){
 					AS2_RecvBlock(recibido, 4, send);
 					flagtorre = 0;
-					if(!flagignore){
+					if(!enviando){
 						if(recibido[0]>127 && recibido[1]<128 && recibido[2]<128 && recibido[3]<128){
-							esperando = 1;
-							TI4_Disable();
+							if((recibido[0] != mensaje[0]) || (recibido[1] != mensaje[1])||(recibido[2] != mensaje[2]) || (recibido[3] != mensaje[3])){
+								recibiendo = 1;
+								enviando = 1;
+							}
 						}
 						else AS2_RecvChar(&error);	
 					}
 				}
 			}
 				
-			if(esperando){
-				esperando = 0;
+			if(recibiendo){
+				recibiendo = 0;
 				//Obtener zona y chequear orden
 					if(recibido[2]&0b00111000){
 						zona = (recibido[2]&0b00111000)>>3;
@@ -212,19 +207,12 @@ void main(void)
 				mensaje[2] = recibido[2];
 				mensaje[3] = recibido[3];
 				
-				/*TI5_Enable();
-				while(flagmove){}
-				flagmove = 0;
-				TI5_Disable();*/
-				
+			}
+			if(enviando && flagespera){
 				//Enviar
-				
+				flagespera = 0;
 				AS2_SendBlock(mensaje, 4, send);
-				maestro = 0;
-				esperando = 0;
-				TI4_Enable();
-				flagignore = 1;
-				//AS1_SendBlock(mensaje, 4, send);
+				AS1_SendBlock(mensaje, 4, send);
 			}
 		}
 		

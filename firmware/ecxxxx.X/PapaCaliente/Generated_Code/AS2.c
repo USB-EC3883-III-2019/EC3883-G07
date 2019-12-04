@@ -6,7 +6,7 @@
 **     Component   : AsynchroSerial
 **     Version     : Component 02.611, Driver 01.33, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-29, 14:52, # CodeGen: 53
+**     Date/Time   : 2019-12-04, 12:52, # CodeGen: 64
 **     Abstract    :
 **         This component "AsynchroSerial" implements an asynchronous serial
 **         communication. The component supports different settings of
@@ -23,8 +23,8 @@
 **             Stop bits               : 1
 **             Parity                  : none
 **             Breaks                  : Disabled
-**             Input buffer size       : 9
-**             Output buffer size      : 9
+**             Input buffer size       : 16
+**             Output buffer size      : 16
 **
 **         Registers
 **             Input buffer            : SCI2D     [$1877]
@@ -53,6 +53,8 @@
 **
 **
 **     Contents    :
+**         Enable          - byte AS2_Enable(void);
+**         Disable         - byte AS2_Disable(void);
 **         RecvChar        - byte AS2_RecvChar(AS2_TComData *Chr);
 **         SendChar        - byte AS2_SendChar(AS2_TComData Chr);
 **         RecvBlock       - byte AS2_RecvBlock(AS2_TComData *Ptr, word Size, word *Rcv);
@@ -126,6 +128,7 @@
 #define CHAR_IN_RX       0x04U         /* Char is in RX buffer     */
 #define RUNINT_FROM_TX   0x08U         /* Interrupt is in progress */
 #define FULL_RX          0x10U         /* Full receive buffer      */
+#define FULL_TX          0x20U         /* Full transmit buffer     */
 
 static volatile byte SerFlag;          /* Flags for serial communication */
                                        /* Bit 0 - Overrun error */
@@ -133,6 +136,8 @@ static volatile byte SerFlag;          /* Flags for serial communication */
                                        /* Bit 2 - Char in RX buffer */
                                        /* Bit 3 - Interrupt is in progress */
                                        /* Bit 4 - Full RX buffer */
+                                       /* Bit 5 - Full TX buffer */
+static bool EnUser;                    /* Enable/Disable SCI */
 byte AS2_InpLen;                       /* Length of the input buffer content */
 static byte InpIndxR;                  /* Index for reading from input buffer */
 static byte InpIndxW;                  /* Index for writing to input buffer */
@@ -142,6 +147,64 @@ static byte OutIndxR;                  /* Index for reading from output buffer *
 static byte OutIndxW;                  /* Index for writing to output buffer */
 static AS2_TComData OutBuffer[AS2_OUT_BUF_SIZE]; /* Output buffer for SCI commmunication */
 static bool OnFreeTxBuf_semaphore;     /* Disable the false calling of the OnFreeTxBuf event */
+
+/*
+** ===================================================================
+**     Method      :  AS2_Enable (component AsynchroSerial)
+**     Description :
+**         Enables the component - it starts the send and receive
+**         functions. Events may be generated
+**         ("DisableEvent"/"EnableEvent").
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+byte AS2_Enable(void)
+{
+  if (!EnUser) {                       /* Is the device disabled by user? */
+    EnUser = TRUE;                     /* If yes then set the flag "device enabled" */
+  SCI2BDH = 0x01U;                     /* Set high divisor register (enable device) */
+  SCI2BDL = 0x0BU;                     /* Set low divisor register (enable device) */
+      /* SCI2C3: ORIE=1,NEIE=1,FEIE=1,PEIE=1 */
+    SCI2C3 |= 0x0FU;                   /* Enable error interrupts */
+    SCI2C2 |= (SCI2C2_TE_MASK | SCI2C2_RE_MASK | SCI2C2_RIE_MASK); /*  Enable transmitter, Enable receiver, Enable receiver interrupt */
+    if (AS2_OutLen) {                  /* Is number of bytes in the transmit buffer greater then 0? */
+      SCI2C2_TIE = 0x01U;              /* Enable transmit interrupt */
+    }
+  }
+  return ERR_OK;                       /* OK */
+}
+
+/*
+** ===================================================================
+**     Method      :  AS2_Disable (component AsynchroSerial)
+**     Description :
+**         Disables the component - it stops the send and receive
+**         functions. No events will be generated.
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+byte AS2_Disable(void)
+{
+  if (EnUser) {                        /* Is the device enabled by user? */
+    EnUser = FALSE;                    /* If yes then set the flag "device disabled" */
+    /* SCI2C3: ORIE=0,NEIE=0,FEIE=0,PEIE=0 */
+    SCI2C3 &= (byte)(~(byte)0x0FU);    /* Disable error interrupts */
+    SCI2C2 &= ((byte)(~(byte)SCI2C2_RE_MASK) & (byte)(~(byte)SCI2C2_TE_MASK) & (byte)(~(byte)SCI2C2_TIE_MASK) & (byte)(~(byte)SCI2C2_RIE_MASK)); /*  Disable receiver, Disable transmitter, Disable transmit interrupt, Disable receiver interrupt */
+    SCI2BDH = 0x00U;                   /* Set high divisor register to zero (disable device) */
+    SCI2BDL = 0x00U;                   /* Set low divisor register to zero (disable device) */
+  }
+  return ERR_OK;                       /* OK */
+}
 
 /*
 ** ===================================================================
@@ -183,9 +246,7 @@ byte AS2_RecvChar(AS2_TComData *Chr)
     EnterCritical();                   /* Save the PS register */
     AS2_InpLen--;                      /* Decrease number of received chars */
     *Chr = InpBuffer[InpIndxR];        /* Received char */
-    if (++InpIndxR >= AS2_INP_BUF_SIZE) { /* Is the index out of the buffer? */
-      InpIndxR = 0U;                   /* Set the index to the start of the buffer */
-    }
+    InpIndxR = (byte)((InpIndxR + 1U) & (AS2_INP_BUF_SIZE - 1U)); /* Update index */
     Result = (byte)((SerFlag & (OVERRUN_ERR|COMMON_ERR|FULL_RX)) ? ERR_COMMON : ERR_OK);
     SerFlag &= (byte)(~(byte)(OVERRUN_ERR|COMMON_ERR|FULL_RX|CHAR_IN_RX)); /* Clear all errors in the status variable */
     ExitCritical();                    /* Restore the PS register */
@@ -225,11 +286,11 @@ byte AS2_SendChar(AS2_TComData Chr)
   EnterCritical();                     /* Save the PS register */
   AS2_OutLen++;                        /* Increase number of bytes in the transmit buffer */
   OutBuffer[OutIndxW] = Chr;           /* Store char to buffer */
-  if (++OutIndxW >= AS2_OUT_BUF_SIZE) { /* Is the index out of the buffer? */
-    OutIndxW = 0U;                     /* Set the index to the start of the buffer */
-  }
-  if (SCI2C2_TIE == 0U) {              /* Is the transmit interrupt already enabled? */
-    SCI2C2_TIE = 0x01U;                /* If no than enable transmit interrupt */
+  OutIndxW = (byte)((OutIndxW + 1U) & (AS2_OUT_BUF_SIZE - 1U)); /* Update index */
+  if (EnUser) {                        /* Is the device enabled by user? */
+    if (SCI2C2_TIE == 0U) {            /* Is the transmit interrupt already enabled? */
+      SCI2C2_TIE = 0x01U;              /* If no than enable transmit interrupt */
+    }
   }
   ExitCritical();                      /* Restore the PS register */
   return ERR_OK;                       /* OK */
@@ -324,17 +385,17 @@ byte AS2_SendBlock(const AS2_TComData * Ptr, word Size, word *Snd)
     OnFreeTxBuf_semaphore = TRUE;      /* Set the OnFreeTxBuf_semaphore to block OnFreeTxBuf calling */
     AS2_OutLen++;                      /* Increase number of bytes in the transmit buffer */
     OutBuffer[OutIndxW] = *Ptr++;      /* Store char to buffer */
-    if (++OutIndxW >= AS2_OUT_BUF_SIZE) { /* Is the index out of the buffer? */
-      OutIndxW = 0U;                   /* Set the index to the start of the buffer */
-    }
+    OutIndxW = (byte)((OutIndxW + 1U) & (AS2_OUT_BUF_SIZE - 1U)); /* Update index */
     count++;                           /* Increase the count of sent data */
     if ((count == Size) || (AS2_OutLen == AS2_OUT_BUF_SIZE)) { /* Is the last desired char put into buffer or the buffer is full? */
       if (!local_OnFreeTxBuf_semaphore) { /* Was the OnFreeTxBuf_semaphore clear before enter the method? */
         OnFreeTxBuf_semaphore = FALSE; /* If yes then clear the OnFreeTxBuf_semaphore */
       }
     }
-    if (SCI2C2_TIE == 0U) {            /* Is the transmit interrupt already enabled? */
-      SCI2C2_TIE = 0x01U;              /* If no than enable transmit interrupt */
+    if (EnUser) {                      /* Is the device enabled by user? */
+      if (SCI2C2_TIE == 0U) {          /* Is the transmit interrupt already enabled? */
+        SCI2C2_TIE = 0x01U;            /* If no than enable transmit interrupt */
+      }
     }
     ExitCritical();                    /* Restore the PS register */
   }
@@ -459,9 +520,7 @@ ISR(AS2_InterruptRx)
   if (AS2_InpLen < AS2_INP_BUF_SIZE) { /* Is number of bytes in the receive buffer lower than size of buffer? */
     AS2_InpLen++;                      /* Increse number of chars in the receive buffer */
     InpBuffer[InpIndxW] = Data;        /* Save received char to the receive buffer */
-    if (++InpIndxW >= AS2_INP_BUF_SIZE) { /* Is the index out of the buffer? */
-      InpIndxW = 0U;                   /* Set the index to the start of the buffer */
-    }
+    InpIndxW = (byte)((InpIndxW + 1U) & (AS2_INP_BUF_SIZE - 1U)); /* Update index */
     OnFlags |= ON_RX_CHAR;             /* Set flag "OnRXChar" */
     if (AS2_InpLen== AS2_INP_BUF_SIZE) { /* Is number of bytes in the receive buffer equal as a size of buffer? */
       OnFlags |= ON_FULL_RX;           /* If yes then set flag "OnFullRxBuff" */
@@ -510,9 +569,7 @@ ISR(AS2_InterruptTx)
     SerFlag |= RUNINT_FROM_TX;         /* Set flag "running int from TX" */
     (void)SCI2S1;                      /* Reset interrupt request flag */
     SCI2D = OutBuffer[OutIndxR];       /* Store char to transmitter register */
-    if (++OutIndxR >= AS2_OUT_BUF_SIZE) { /* Is the index out of the buffer? */
-      OutIndxR = 0U;                   /* Set the index to the start of the buffer */
-    }
+    OutIndxR = (byte)((OutIndxR + 1U) & (AS2_OUT_BUF_SIZE - 1U)); /* Update index */
   } else {
     if (!OnFreeTxBuf_semaphore) {
       OnFlags |= ON_FREE_TX;           /* Set flag "OnFreeTxBuf" */
@@ -564,6 +621,7 @@ void AS2_Init(void)
 {
   SerFlag = 0x00U;                     /* Reset flags */
   OnFreeTxBuf_semaphore = FALSE;       /* Clear the OnFreeTxBuf_semaphore */
+  EnUser = TRUE;                       /* Enable device */
   AS2_InpLen = 0x00U;                  /* No char in the receive buffer */
   InpIndxR = 0x00U;                    /* Reset read index to the receive buffer */
   InpIndxW = 0x00U;                    /* Reset write index to the receive buffer */

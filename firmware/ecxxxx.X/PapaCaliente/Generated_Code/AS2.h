@@ -6,7 +6,7 @@
 **     Component   : AsynchroSerial
 **     Version     : Component 02.611, Driver 01.33, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-29, 14:52, # CodeGen: 53
+**     Date/Time   : 2019-12-04, 12:52, # CodeGen: 64
 **     Abstract    :
 **         This component "AsynchroSerial" implements an asynchronous serial
 **         communication. The component supports different settings of
@@ -23,8 +23,8 @@
 **             Stop bits               : 1
 **             Parity                  : none
 **             Breaks                  : Disabled
-**             Input buffer size       : 9
-**             Output buffer size      : 9
+**             Input buffer size       : 16
+**             Output buffer size      : 16
 **
 **         Registers
 **             Input buffer            : SCI2D     [$1877]
@@ -53,6 +53,8 @@
 **
 **
 **     Contents    :
+**         Enable          - byte AS2_Enable(void);
+**         Disable         - byte AS2_Disable(void);
 **         RecvChar        - byte AS2_RecvChar(AS2_TComData *Chr);
 **         SendChar        - byte AS2_SendChar(AS2_TComData Chr);
 **         RecvBlock       - byte AS2_RecvBlock(AS2_TComData *Ptr, word Size, word *Rcv);
@@ -146,11 +148,44 @@
   typedef byte AS2_TComData ;          /* User type for communication. Size of this type depends on the communication data width. */
 #endif
 
-#define AS2_INP_BUF_SIZE 0x09U         /* Input buffer size */
-#define AS2_OUT_BUF_SIZE 0x09U         /* Output buffer size */
+#define AS2_INP_BUF_SIZE 0x10U         /* Input buffer size */
+#define AS2_OUT_BUF_SIZE 0x10U         /* Output buffer size */
 
 extern byte AS2_OutLen;                /* Length of the output buffer content */
 extern byte AS2_InpLen;                /* Length of the input buffer content */
+
+byte AS2_Enable(void);
+/*
+** ===================================================================
+**     Method      :  AS2_Enable (component AsynchroSerial)
+**     Description :
+**         Enables the component - it starts the send and receive
+**         functions. Events may be generated
+**         ("DisableEvent"/"EnableEvent").
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
+
+byte AS2_Disable(void);
+/*
+** ===================================================================
+**     Method      :  AS2_Disable (component AsynchroSerial)
+**     Description :
+**         Disables the component - it stops the send and receive
+**         functions. No events will be generated.
+**     Parameters  : None
+**     Returns     :
+**         ---             - Error code, possible codes:
+**                           ERR_OK - OK
+**                           ERR_SPEED - This device does not work in
+**                           the active speed mode
+** ===================================================================
+*/
 
 byte AS2_RecvChar(AS2_TComData *Chr);
 /*

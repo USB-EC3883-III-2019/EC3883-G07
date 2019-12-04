@@ -37,7 +37,7 @@ extern char flagtorre;
 extern char flagser;
 extern char flagmotor;
 extern char flagespera;
-extern char flagignore;
+extern char enviando;
 extern char flagmove;
 
 /*
@@ -299,7 +299,7 @@ void TI3_OnInterrupt(void)
 */
 void TI4_OnInterrupt(void)
 {
-  flagignore = 0;
+  enviando = 0;
 
 }
 
