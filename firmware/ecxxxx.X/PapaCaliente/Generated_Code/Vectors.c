@@ -5,7 +5,7 @@
 **     Processor   : MC9S08QE128CLK
 **     Version     : Component 01.003, Driver 01.40, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-18, 14:16, # CodeGen: 38
+**     Date/Time   : 2019-12-02, 11:01, # CodeGen: 54
 **     Abstract    :
 **         This component "MC9S08QE128_80" contains initialization 
 **         of the CPU and provides basic methods and events for 
@@ -71,16 +71,18 @@
 #include "Inhr4.h"
 #include "TI2.h"
 #include "TI3.h"
+#include "TI4.h"
+#include "TI5.h"
 
 /*lint -save  -e950 Disable MISRA rule (1.1) checking. */
 static void (* near const _vect[])(void) @0xFFC0 = { /* Interrupt vector table */
 /*lint -restore Enable MISRA rule (1.1) checking. */
          Cpu_Interrupt,                /* Int.no. 31 Vtpm3ovf (at FFC0)              Unassigned */
-         Cpu_Interrupt,                /* Int.no. 30 Vtpm3ch5 (at FFC2)              Unassigned */
+         TI5_Interrupt,                /* Int.no. 30 Vtpm3ch5 (at FFC2)              Used */
          Cpu_Interrupt,                /* Int.no. 29 Vtpm3ch4 (at FFC4)              Unassigned */
          Cpu_Interrupt,                /* Int.no. 28 Vtpm3ch3 (at FFC6)              Unassigned */
          Cpu_Interrupt,                /* Int.no. 27 Vtpm3ch2 (at FFC8)              Unassigned */
-         Cpu_Interrupt,                /* Int.no. 26 Vtpm3ch1 (at FFCA)              Unassigned */
+         TI4_Interrupt,                /* Int.no. 26 Vtpm3ch1 (at FFCA)              Used */
          TI3_Interrupt,                /* Int.no. 25 Vtpm3ch0 (at FFCC)              Used */
          TI1_Interrupt,                /* Int.no. 24 Vrtc (at FFCE)                  Used */
          AS2_InterruptTx,              /* Int.no. 23 Vsci2tx (at FFD0)               Used */

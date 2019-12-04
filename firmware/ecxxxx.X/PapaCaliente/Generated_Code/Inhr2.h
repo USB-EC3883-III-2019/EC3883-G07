@@ -6,7 +6,7 @@
 **     Component   : BitIO
 **     Version     : Component 02.086, Driver 03.27, CPU db: 3.00.067
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-11, 12:50, # CodeGen: 29
+**     Date/Time   : 2019-11-20, 10:40, # CodeGen: 40
 **     Abstract    :
 **         This component "BitIO" implements an one-bit input/output.
 **         It uses one bit/pin of a port.
@@ -17,13 +17,13 @@
 **             ----------------------------------------------------
 **                Number (on package)  |    Name
 **             ----------------------------------------------------
-**                       28            |  PTD5_KBI2P5
+**                       26            |  PTD7_KBI2P7
 **             ----------------------------------------------------
 **
 **         Port name                   : PTD
 **
-**         Bit number (in port)        : 5
-**         Bit mask of the port        : $0020
+**         Bit number (in port)        : 7
+**         Bit mask of the port        : $0080
 **
 **         Initial direction           : Output (direction can be changed)
 **         Safe mode                   : yes
@@ -121,7 +121,7 @@
 ** ===================================================================
 */
 #define Inhr2_GetVal() ( \
-    (bool)((getReg8(PTDD) & 0x20U))    /* Return port data */ \
+    (bool)((getReg8(PTDD) & 0x80U))    /* Return port data */ \
   )
 
 /*
@@ -163,8 +163,8 @@ void Inhr2_PutVal(bool Val);
 ** ===================================================================
 */
 #define Inhr2_ClrVal() ( \
-    (void)clrReg8Bits(PTDD, 0x20U)     /* PTDD5=0x00U */, \
-    (Shadow_PTD &= 0xDFU)              /* Set appropriate bit in shadow variable */ \
+    (void)clrReg8Bits(PTDD, 0x80U)     /* PTDD7=0x00U */, \
+    (Shadow_PTD &= 0x7FU)              /* Set appropriate bit in shadow variable */ \
   )
 
 /*
@@ -184,8 +184,8 @@ void Inhr2_PutVal(bool Val);
 ** ===================================================================
 */
 #define Inhr2_SetVal() ( \
-    (void)setReg8Bits(PTDD, 0x20U)     /* PTDD5=0x01U */, \
-    (Shadow_PTD |= 0x20U)              /* Set appropriate bit in shadow variable */ \
+    (void)setReg8Bits(PTDD, 0x80U)     /* PTDD7=0x01U */, \
+    (Shadow_PTD |= 0x80U)              /* Set appropriate bit in shadow variable */ \
   )
 
 /*
@@ -205,8 +205,8 @@ void Inhr2_PutVal(bool Val);
 ** ===================================================================
 */
 #define Inhr2_NegVal() ( \
-    (void)invertReg8Bits(PTDD, 0x20U)  /* PTDD5=invert */, \
-    (Shadow_PTD ^= 0x20U)              /* Set appropriate bit in shadow variable */ \
+    (void)invertReg8Bits(PTDD, 0x80U)  /* PTDD7=invert */, \
+    (Shadow_PTD ^= 0x80U)              /* Set appropriate bit in shadow variable */ \
   )
 
 /*
@@ -221,7 +221,7 @@ void Inhr2_PutVal(bool Val);
 ** ===================================================================
 */
 #define Inhr2_GetDir() ( \
-    (bool)((getReg8(PTDDD) & 0x20U))   /* Return pin direction, 0==GPI, nonzero==GPO */ \
+    (bool)((getReg8(PTDDD) & 0x80U))   /* Return pin direction, 0==GPI, nonzero==GPO */ \
   )
 
 /*
@@ -248,7 +248,7 @@ void Inhr2_SetDir(bool Dir);
 ** ===================================================================
 */
 #define Inhr2_SetInput() ( \
-    (void)clrReg8Bits(PTDDD, 0x20U)    /* PTDDD5=0x00U */ \
+    (void)clrReg8Bits(PTDDD, 0x80U)    /* PTDDD7=0x00U */ \
   )
 
 /*

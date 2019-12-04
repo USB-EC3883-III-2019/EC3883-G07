@@ -7,7 +7,7 @@
 **     Version     : Component 01.003, Driver 01.40, CPU db: 3.00.067
 **     Datasheet   : MC9S08QE128RM Rev. 2 6/2007
 **     Compiler    : CodeWarrior HCS08 C Compiler
-**     Date/Time   : 2019-11-18, 14:16, # CodeGen: 38
+**     Date/Time   : 2019-12-02, 15:05, # CodeGen: 59
 **     Abstract    :
 **         This component "MC9S08QE128_80" contains initialization 
 **         of the CPU and provides basic methods and events for 
@@ -78,6 +78,8 @@
 #include "Inhr4.h"
 #include "TI2.h"
 #include "TI3.h"
+#include "TI4.h"
+#include "TI5.h"
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -287,21 +289,27 @@ void PE_low_level_init(void)
   /* ### Free running 8-bit counter "FC321" init code ... */
   FC321_Init();
   /* ### BitIO "Inhr1" init code ... */
-  Shadow_PTD &= 0xEFU;                 /* Initialize pin shadow variable bit */
-  /* ### BitIO "Inhr2" init code ... */
-  Shadow_PTD &= 0xDFU;                 /* Initialize pin shadow variable bit */
-  /* ### BitIO "Inhr3" init code ... */
   Shadow_PTD &= 0xBFU;                 /* Initialize pin shadow variable bit */
-  /* ### BitIO "Inhr4" init code ... */
+  /* ### BitIO "Inhr2" init code ... */
   Shadow_PTD &= 0x7FU;                 /* Initialize pin shadow variable bit */
+  /* ### BitIO "Inhr3" init code ... */
+  Shadow_PTD &= 0xEFU;                 /* Initialize pin shadow variable bit */
+  /* ### BitIO "Inhr4" init code ... */
+  Shadow_PTD &= 0xDFU;                 /* Initialize pin shadow variable bit */
   /* ### MultiBitIO "MBit1" init code ... */
   /* ### TimerInt "TI2" init code ... */
   TI2_Init();
   /* ### TimerInt "TI3" init code ... */
   TI3_Init();
+  /* ### TimerInt "TI4" init code ... */
+  TI4_Init();
+  /* ### TimerInt "TI5" init code ... */
+  TI5_Init();
   /* Common peripheral initialization - ENABLE */
   /* TPM2SC: CLKSB=0,CLKSA=1 */
   clrSetReg8Bits(TPM2SC, 0x10U, 0x08U); 
+  /* TPM3SC: CLKSB=0,CLKSA=1 */
+  clrSetReg8Bits(TPM3SC, 0x10U, 0x08U); 
   CCR_lock = (byte)0;
   __EI();                              /* Enable interrupts */
 }

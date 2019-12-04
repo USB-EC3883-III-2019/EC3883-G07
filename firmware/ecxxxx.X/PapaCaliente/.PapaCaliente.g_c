@@ -38,13 +38,15 @@
         <Line>Project_Settings\Linker_Files\ProcessorExpert.prm</Line>
         <Line>Generated_Code\Vectors.c</Line>
       </GenExtraFiles>
-      <XtraAge1>1332900381</XtraAge1>
+      <XtraAge1>1333942330</XtraAge1>
       <GenExtraFileType1>4</GenExtraFileType1>
       <GenLinkedFiles lines_count="0" />
       <GenEventModules lines_count="1">
         <Line>Events</Line>
       </GenEventModules>
-      <GenMethodsInEvents lines_count="13">
+      <GenMethodsInEvents lines_count="15">
+        <Line>TI5_OnInterrupt</Line>
+        <Line>TI4_OnInterrupt</Line>
         <Line>TI3_OnInterrupt</Line>
         <Line>TI2_OnInterrupt</Line>
         <Line>TI1_OnInterrupt</Line>
@@ -59,7 +61,7 @@
         <Line>AS1_OnFullRxBuf</Line>
         <Line>AS1_OnFreeTxBuf</Line>
       </GenMethodsInEvents>
-      <GenAllModules lines_count="19">
+      <GenAllModules lines_count="21">
         <Line>AS1</Line>
         <Line>AS2</Line>
         <Line>Cpu</Line>
@@ -79,9 +81,11 @@
         <Line>TI1</Line>
         <Line>TI2</Line>
         <Line>TI3</Line>
+        <Line>TI4</Line>
+        <Line>TI5</Line>
       </GenAllModules>
       <GenExternModules lines_count="0" />
-      <GenBeanModules lines_count="12">
+      <GenBeanModules lines_count="14">
         <Line>AS1</Line>
         <Line>AS2</Line>
         <Line>PWM1</Line>
@@ -94,11 +98,13 @@
         <Line>Inhr4</Line>
         <Line>TI2</Line>
         <Line>TI3</Line>
+        <Line>TI4</Line>
+        <Line>TI5</Line>
       </GenBeanModules>
     </GenFiles>
     <SignalListFile>Documentation\PapaCaliente_SIGNALS.txt</SignalListFile>
     <DestinationCompiler>MetrowerksHCS08CC</DestinationCompiler>
-    <ProjectModificationStamp>43</ProjectModificationStamp>
+    <ProjectModificationStamp>63</ProjectModificationStamp>
   </Options>
   <CpuID_2>
     <Generated>false</Generated>
@@ -155,7 +161,7 @@
     <GenDriverVersion>01.40</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
     <HeaderAge>1332569947</HeaderAge>
-    <CodeAge>1332900381</CodeAge>
+    <CodeAge>1333950653</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>20</GenNumMethods>
     <SetHighSpeed>false</SetHighSpeed>
@@ -207,8 +213,8 @@
     <GenComponentVersion>02.611</GenComponentVersion>
     <GenDriverVersion>01.33</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
-    <HeaderAge>1332567532</HeaderAge>
-    <CodeAge>1332567532</CodeAge>
+    <HeaderAge>1333026114</HeaderAge>
+    <CodeAge>1333026114</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>30</GenNumMethods>
     <Enable>false</Enable>
@@ -479,8 +485,8 @@
     <GenComponentVersion>02.611</GenComponentVersion>
     <GenDriverVersion>01.33</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
-    <HeaderAge>1332438619</HeaderAge>
-    <CodeAge>1332442106</CodeAge>
+    <HeaderAge>1333622412</HeaderAge>
+    <CodeAge>1333622412</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>30</GenNumMethods>
     <Enable>false</Enable>
@@ -1145,8 +1151,8 @@
     <GenComponentVersion>01.000</GenComponentVersion>
     <GenDriverVersion>01.01</GenDriverVersion>
     <GenEventModule />
-    <HeaderAge>1332438619</HeaderAge>
-    <CodeAge>1332438619</CodeAge>
+    <HeaderAge>1333024025</HeaderAge>
+    <CodeAge>1333024025</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>11</GenNumMethods>
     <GetDir>true</GetDir>
@@ -1326,8 +1332,8 @@
       <GenComponentVersion>02.086</GenComponentVersion>
       <GenDriverVersion>03.27</GenDriverVersion>
       <GenEventModule />
-      <HeaderAge>1332438619</HeaderAge>
-      <CodeAge>1332438619</CodeAge>
+      <HeaderAge>1333024025</HeaderAge>
+      <CodeAge>1333024025</CodeAge>
       <AsemblAge>-1</AsemblAge>
       <GenNumMethods>9</GenNumMethods>
       <GetDir>true</GetDir>
@@ -1478,8 +1484,8 @@
       <GenComponentVersion>02.086</GenComponentVersion>
       <GenDriverVersion>03.27</GenDriverVersion>
       <GenEventModule />
-      <HeaderAge>1332438619</HeaderAge>
-      <CodeAge>1332438619</CodeAge>
+      <HeaderAge>1333024025</HeaderAge>
+      <CodeAge>1333024025</CodeAge>
       <AsemblAge>-1</AsemblAge>
       <GenNumMethods>9</GenNumMethods>
       <GetDir>true</GetDir>
@@ -1630,8 +1636,8 @@
       <GenComponentVersion>02.086</GenComponentVersion>
       <GenDriverVersion>03.27</GenDriverVersion>
       <GenEventModule />
-      <HeaderAge>1332438619</HeaderAge>
-      <CodeAge>1332438619</CodeAge>
+      <HeaderAge>1333024025</HeaderAge>
+      <CodeAge>1333024025</CodeAge>
       <AsemblAge>-1</AsemblAge>
       <GenNumMethods>9</GenNumMethods>
       <GetDir>true</GetDir>
@@ -1782,8 +1788,8 @@
       <GenComponentVersion>02.086</GenComponentVersion>
       <GenDriverVersion>03.27</GenDriverVersion>
       <GenEventModule />
-      <HeaderAge>1332438619</HeaderAge>
-      <CodeAge>1332438619</CodeAge>
+      <HeaderAge>1333024025</HeaderAge>
+      <CodeAge>1333024025</CodeAge>
       <AsemblAge>-1</AsemblAge>
       <GenNumMethods>9</GenNumMethods>
       <GetDir>true</GetDir>
@@ -1935,8 +1941,8 @@
     <GenComponentVersion>02.161</GenComponentVersion>
     <GenDriverVersion>01.23</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
-    <HeaderAge>1332900381</HeaderAge>
-    <CodeAge>1332900381</CodeAge>
+    <HeaderAge>1333358932</HeaderAge>
+    <CodeAge>1333358932</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>14</GenNumMethods>
     <Enable>false</Enable>
@@ -2038,11 +2044,11 @@
     <GenComponentVersion>02.161</GenComponentVersion>
     <GenDriverVersion>01.23</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
-    <HeaderAge>1332902919</HeaderAge>
-    <CodeAge>1332902919</CodeAge>
+    <HeaderAge>1333950653</HeaderAge>
+    <CodeAge>1333950653</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>14</GenNumMethods>
-    <Enable>false</Enable>
+    <Enable>true</Enable>
     <Disable>false</Disable>
     <EnableEvent>false</EnableEvent>
     <DisableEvent>false</DisableEvent>
@@ -2069,44 +2075,285 @@
     <GenSmartUserChangesDetected_Header>false</GenSmartUserChangesDetected_Header>
     <GenSmartUserChangesDetected_Code>false</GenSmartUserChangesDetected_Code>
     <GenSmartUserChangesDetected_Asembl>false</GenSmartUserChangesDetected_Asembl>
-    <GenMethodPos>5</GenMethodPos>
+    <GenMethodPos>8</GenMethodPos>
     <MethodPos>
       <MethodPos0>Enable</MethodPos0>
       <MethodType>method</MethodType>
       <ModuleType>Header</ModuleType>
       <LineBeg>111</LineBeg>
-      <LineEnd>111</LineEnd>
+      <LineEnd>127</LineEnd>
     </MethodPos>
     <MethodPos>
       <MethodPos1>Interrupt</MethodPos1>
       <MethodType>internal_method</MethodType>
       <ModuleType>Header</ModuleType>
-      <LineBeg>112</LineBeg>
-      <LineEnd>125</LineEnd>
+      <LineBeg>128</LineBeg>
+      <LineEnd>141</LineEnd>
     </MethodPos>
     <MethodPos>
       <MethodPos2>Init</MethodPos2>
       <MethodType>internal_method</MethodType>
       <ModuleType>Header</ModuleType>
-      <LineBeg>126</LineBeg>
-      <LineEnd>138</LineEnd>
+      <LineBeg>142</LineBeg>
+      <LineEnd>154</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos3>HWEnDi</MethodPos3>
+      <MethodType>internal_method_declaration</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>112</LineBeg>
+      <LineEnd>124</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos4>HWEnDi</MethodPos4>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>128</LineBeg>
+      <LineEnd>151</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos5>Enable</MethodPos5>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>152</LineBeg>
+      <LineEnd>171</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos6>Init</MethodPos6>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>172</LineBeg>
+      <LineEnd>195</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos7>Interrupt</MethodPos7>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>196</LineBeg>
+      <LineEnd>217</LineEnd>
+    </MethodPos>
+    <GenExtraFilesCount>0</GenExtraFilesCount>
+  </ComponentID_30>
+  <ComponentID_43>
+    <Generated>true</Generated>
+    <GenCompName>TI4</GenCompName>
+    <GenComponentVersion>02.161</GenComponentVersion>
+    <GenDriverVersion>01.23</GenDriverVersion>
+    <GenEventModule>Events</GenEventModule>
+    <HeaderAge>1333950653</HeaderAge>
+    <CodeAge>1333950653</CodeAge>
+    <AsemblAge>-1</AsemblAge>
+    <GenNumMethods>14</GenNumMethods>
+    <Enable>true</Enable>
+    <Disable>true</Disable>
+    <EnableEvent>false</EnableEvent>
+    <DisableEvent>false</DisableEvent>
+    <SetPeriodMode>false</SetPeriodMode>
+    <SetPeriodTicks16>false</SetPeriodTicks16>
+    <SetPeriodTicks32>false</SetPeriodTicks32>
+    <SetPeriodUS>false</SetPeriodUS>
+    <SetPeriodMS>false</SetPeriodMS>
+    <SetPeriodSec>false</SetPeriodSec>
+    <SetPeriodReal>false</SetPeriodReal>
+    <SetFreqHz>false</SetFreqHz>
+    <SetFreqkHz>false</SetFreqkHz>
+    <SetFreqMHz>false</SetFreqMHz>
+    <GenNumEvents>3</GenNumEvents>
+    <BeforeNewSpeed_Selected>0</BeforeNewSpeed_Selected>
+    <BeforeNewSpeed_Name>TI4_BeforeNewSpeed</BeforeNewSpeed_Name>
+    <BeforeNewSpeed_Priority>interrupts disabled</BeforeNewSpeed_Priority>
+    <AfterNewSpeed_Selected>0</AfterNewSpeed_Selected>
+    <AfterNewSpeed_Name>TI4_AfterNewSpeed</AfterNewSpeed_Name>
+    <AfterNewSpeed_Priority>interrupts disabled</AfterNewSpeed_Priority>
+    <OnInterrupt_Selected>2</OnInterrupt_Selected>
+    <OnInterrupt_Name>TI4_OnInterrupt</OnInterrupt_Name>
+    <OnInterrupt_Priority>same as interrupt</OnInterrupt_Priority>
+    <GenSmartUserChangesDetected_Header>false</GenSmartUserChangesDetected_Header>
+    <GenSmartUserChangesDetected_Code>false</GenSmartUserChangesDetected_Code>
+    <GenSmartUserChangesDetected_Asembl>false</GenSmartUserChangesDetected_Asembl>
+    <GenMethodPos>10</GenMethodPos>
+    <MethodPos>
+      <MethodPos0>Enable</MethodPos0>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>112</LineBeg>
+      <LineEnd>128</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos1>Disable</MethodPos1>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>129</LineBeg>
+      <LineEnd>144</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos2>Interrupt</MethodPos2>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>145</LineBeg>
+      <LineEnd>158</LineEnd>
     </MethodPos>
     <MethodPos>
       <MethodPos3>Init</MethodPos3>
       <MethodType>internal_method</MethodType>
-      <ModuleType>Code</ModuleType>
-      <LineBeg>114</LineBeg>
-      <LineEnd>137</LineEnd>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>159</LineBeg>
+      <LineEnd>171</LineEnd>
     </MethodPos>
     <MethodPos>
-      <MethodPos4>Interrupt</MethodPos4>
+      <MethodPos4>HWEnDi</MethodPos4>
+      <MethodType>internal_method_declaration</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>114</LineBeg>
+      <LineEnd>126</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos5>HWEnDi</MethodPos5>
       <MethodType>internal_method</MethodType>
       <ModuleType>Code</ModuleType>
-      <LineBeg>138</LineBeg>
+      <LineBeg>130</LineBeg>
       <LineEnd>158</LineEnd>
     </MethodPos>
+    <MethodPos>
+      <MethodPos6>Enable</MethodPos6>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>159</LineBeg>
+      <LineEnd>181</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos7>Disable</MethodPos7>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>182</LineBeg>
+      <LineEnd>204</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos8>Init</MethodPos8>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>205</LineBeg>
+      <LineEnd>224</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos9>Interrupt</MethodPos9>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>225</LineBeg>
+      <LineEnd>246</LineEnd>
+    </MethodPos>
     <GenExtraFilesCount>0</GenExtraFilesCount>
-  </ComponentID_30>
+  </ComponentID_43>
+  <ComponentID_44>
+    <Generated>true</Generated>
+    <GenCompName>TI5</GenCompName>
+    <GenComponentVersion>02.161</GenComponentVersion>
+    <GenDriverVersion>01.23</GenDriverVersion>
+    <GenEventModule>Events</GenEventModule>
+    <HeaderAge>1333950653</HeaderAge>
+    <CodeAge>1333950653</CodeAge>
+    <AsemblAge>-1</AsemblAge>
+    <GenNumMethods>14</GenNumMethods>
+    <Enable>true</Enable>
+    <Disable>true</Disable>
+    <EnableEvent>false</EnableEvent>
+    <DisableEvent>false</DisableEvent>
+    <SetPeriodMode>false</SetPeriodMode>
+    <SetPeriodTicks16>false</SetPeriodTicks16>
+    <SetPeriodTicks32>false</SetPeriodTicks32>
+    <SetPeriodUS>false</SetPeriodUS>
+    <SetPeriodMS>false</SetPeriodMS>
+    <SetPeriodSec>false</SetPeriodSec>
+    <SetPeriodReal>false</SetPeriodReal>
+    <SetFreqHz>false</SetFreqHz>
+    <SetFreqkHz>false</SetFreqkHz>
+    <SetFreqMHz>false</SetFreqMHz>
+    <GenNumEvents>3</GenNumEvents>
+    <BeforeNewSpeed_Selected>0</BeforeNewSpeed_Selected>
+    <BeforeNewSpeed_Name>TI5_BeforeNewSpeed</BeforeNewSpeed_Name>
+    <BeforeNewSpeed_Priority>interrupts disabled</BeforeNewSpeed_Priority>
+    <AfterNewSpeed_Selected>0</AfterNewSpeed_Selected>
+    <AfterNewSpeed_Name>TI5_AfterNewSpeed</AfterNewSpeed_Name>
+    <AfterNewSpeed_Priority>interrupts disabled</AfterNewSpeed_Priority>
+    <OnInterrupt_Selected>2</OnInterrupt_Selected>
+    <OnInterrupt_Name>TI5_OnInterrupt</OnInterrupt_Name>
+    <OnInterrupt_Priority>same as interrupt</OnInterrupt_Priority>
+    <GenSmartUserChangesDetected_Header>false</GenSmartUserChangesDetected_Header>
+    <GenSmartUserChangesDetected_Code>false</GenSmartUserChangesDetected_Code>
+    <GenSmartUserChangesDetected_Asembl>false</GenSmartUserChangesDetected_Asembl>
+    <GenMethodPos>10</GenMethodPos>
+    <MethodPos>
+      <MethodPos0>Enable</MethodPos0>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>112</LineBeg>
+      <LineEnd>128</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos1>Disable</MethodPos1>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>129</LineBeg>
+      <LineEnd>144</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos2>Interrupt</MethodPos2>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>145</LineBeg>
+      <LineEnd>158</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos3>Init</MethodPos3>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>159</LineBeg>
+      <LineEnd>171</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos4>HWEnDi</MethodPos4>
+      <MethodType>internal_method_declaration</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>114</LineBeg>
+      <LineEnd>126</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos5>HWEnDi</MethodPos5>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>130</LineBeg>
+      <LineEnd>158</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos6>Enable</MethodPos6>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>159</LineBeg>
+      <LineEnd>181</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos7>Disable</MethodPos7>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>182</LineBeg>
+      <LineEnd>204</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos8>Init</MethodPos8>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>205</LineBeg>
+      <LineEnd>224</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos9>Interrupt</MethodPos9>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>225</LineBeg>
+      <LineEnd>246</LineEnd>
+    </MethodPos>
+    <GenExtraFilesCount>0</GenExtraFilesCount>
+  </ComponentID_44>
   <UsedSrcFiles>
     <SrcFile0>Drivers\Common\CheckRegBits8_Rst.prg=1116866294</SrcFile0>
     <SrcFile1>Drivers\Common\MultiBitIO_NegBit.inc=1116866294</SrcFile1>

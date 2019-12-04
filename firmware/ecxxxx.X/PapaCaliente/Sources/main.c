@@ -42,6 +42,8 @@
 #include "Inhr4.h"
 #include "TI2.h"
 #include "TI3.h"
+#include "TI4.h"
+#include "TI5.h"
 /* Include shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -54,13 +56,18 @@ char flagtorre=0;
 char flagser=0;
 char flagmotor=0;
 char flagespera = 0;
+char flagignore = 0;
+char flagmove = 0;
 
 void main(void)
 {
-	char bloque[3],carac,caracoriginal,prueba=0b00001111, error,send,esperando=0, maestro=0, esclavo=1,encabezado, mensaje[4], recibido[3];
-	char step=1, sentido = 1, posicion = 40, stepmax = 8, zona, i;
+	char carac,caracoriginal,prueba=0b00001111, error,esperando=0, encabezado=0, mensaje[4], recibido[4]={0,0,0,0};
+	char bloque[4] = {0,0,0,0};
+	char step=1, sentido = 1, posicion = 40, stepmax = 9, zona, i;
 	char zonas[6] = {7, 20, 33, 46, 59, 72};
+	char maestro=0, esclavo=1, orden = 0;
 	char Q[8] = {0b00000101, 0b00000001,0b00001001, 0b00001000, 0b00001010, 0b00000010, 0b00000110, 0b00000100};
+	char *send;
 	unsigned int espera;
 	
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
@@ -68,40 +75,27 @@ void main(void)
   /*** End of Processor Expert internal initialization.                    ***/
 	while(1){
 		if(flagusuario){
-			do{AS1_RecvChar(&encabezado);}
-			while(!(encabezado&0b10000000));
-			while(AS1_GetCharsInRxBuf()<3);
-			AS1_RecvBlock(bloque, 3, &send);
-			maestro = !(encabezado&0b00100000);
-			esclavo = (encabezado&0b00100000);
-			caracoriginal = (encabezado<<4)|(bloque[0]&0b00001111);
+			if(AS1_GetCharsInRxBuf()>=4){
+				carac = AS1_GetCharsInRxBuf();
+				AS1_RecvBlock(bloque, 4, send);
+				maestro = !(bloque[0]&0b00100000);
+				esclavo = (bloque[0]&0b00100000)>>5;
+				caracoriginal = (bloque[0]<<4)|(bloque[1]&0b00001111);
+				flagusuario = 0;
+			}	
 		}
-			/*if(!AS1_GetCharsInRxBuf()){
-				flag = 0;
-			}
-			if(AS2_GetCharsInRxBuf() && esperando){
-				esperando = 0;
-				AS2_RecvChar(&carac);
-				AS1_SendChar(carac);
-			}*/
-		
-		/*FC321_GetTimeUS(&espera);
-		if(espera>3000){
-			flagser = 0;
-			do {error = AS2_SendChar(prueba);} while(error != ERR_OK);
-			FC321_Reset();	
-		}*/
+			
 		
 //MAESTRO		
 		if(maestro){
 			//Armar mensaje para enviar
-			mensaje[0] = encabezado&0b10001111;
-			mensaje[1] = bloque[0]&0b00001111;
-			mensaje[2] = bloque[1];
-			mensaje[3] = bloque[2];
+			mensaje[0] = bloque[0]&0b10001111;
+			mensaje[1] = bloque[1]&0b00001111;
+			mensaje[2] = bloque[2];
+			mensaje[3] = bloque[3];
 			
 			//Obtener zona de la primera transmision
-			zona = (bloque[0]&0b01110000)>>4;
+			zona = (bloque[1]&0b01110000)>>4;
 			
 			//Ubicar motor en la zona
 			TI2_EnableEvent();
@@ -109,9 +103,11 @@ void main(void)
 				if(flagmotor){
 					flagmotor = 0;
 					sentido = (zonas[zona-1]>posicion);
-					if(step == stepmax && sentido)step = 0;	//Mantener steps en rango de 1 a stepmax (4 u 8)
-					if(step == 1 && !sentido) step = stepmax+1;	
-
+					if(step == stepmax)step = 1;	//Mantener steps en rango de 1 a stepmax (4 u 8)
+					if(step == 0) step = stepmax-1;	
+					
+					MBit1_PutVal(Q[(step-1)]);
+					
 					if(sentido){
 						posicion++;
 						step++;
@@ -119,29 +115,31 @@ void main(void)
 					else {
 						posicion--;
 						step--;
-					}
-										
-					MBit1_PutVal(Q[(step-1)]);		
+					}										
 				}				
 			}
 			TI2_DisableEvent();
 			
 			if(flagespera){
 				flagespera = 0;
-				AS2_SendBlock(mensaje, 4, &send);
+				flagignore = 1;
+				AS2_SendBlock(mensaje, 4, send);
+				TI4_Enable();
 			}
-			
 			if(flagtorre){
-				do{AS2_RecvChar(&encabezado);}
-				while(!(encabezado&0b10000000));
-				while(AS2_GetCharsInRxBuf()<3);
-				AS2_RecvBlock(recibido, 3, &send);
-				
-				if(!recibido[2] && !recibido[1]){
-					carac = (encabezado<<4)|(recibido[0]&0b00001111);
-					if(carac==caracoriginal){						
-					AS1_SendChar(carac);
-					maestro = 0;
+				if(AS2_GetCharsInRxBuf()>=4){
+					AS2_RecvBlock(recibido, 4, send);
+					flagtorre = 0;
+					if(!flagignore){
+						if(recibido[0]>127 && recibido[1]<128 && !recibido[2] && !recibido[3]){
+							carac = ((recibido[0]&0b00001111)<<4)|(recibido[1]&0b00001111);
+							if(carac==caracoriginal){
+								AS1_SendBlock(recibido, 4, send);
+								maestro = 0;
+								TI4_Disable();
+							}
+						}
+						else AS2_RecvChar(&error);	
 					}
 				}
 			}			
@@ -150,57 +148,84 @@ void main(void)
 //ESCLAVO		
 		if(esclavo){
 			if(flagtorre){
-				do{AS2_RecvChar(&encabezado);}
-				while(!(encabezado&0b10000000));
-				while(AS2_GetCharsInRxBuf()<3);
-				AS2_RecvBlock(recibido, 3, &send);			
-			}
-			//Obtener zona
-			zona = 0;
-			i = 0;
-			while(zona == 0){
-				if(recibido[2-i]&0b00000111){
-					zona = recibido[2-i]&0b00000111;
-					recibido[2-i] = recibido[2-i]&0b11111000;
+				if(AS2_GetCharsInRxBuf()>=4){
+					//AS2_RecvChar(&recibido[0]);
+					//while(recibido[0]<127)AS2_RecvChar(&recibido[0]);
+					AS2_RecvBlock(recibido, 4, send);
+					flagtorre = 0;
+					if(!flagignore){
+						if(recibido[0]>127 && recibido[1]<128 && recibido[2]<128 && recibido[3]<128){
+							esperando = 1;
+							TI4_Disable();
+						}
+						else AS2_RecvChar(&error);	
+					}
 				}
-				else{
-					zona = recibido[2-i]&0b00111000;
-					recibido[2-i]&0b00000000;
-				}
-				i++;
 			}
 				
-			//Ubicar motor en la zona
-			TI2_EnableEvent();
-			while(posicion != zonas[zona-1]){
-				if(flagmotor){
-					flagmotor = 0;
-					sentido = (zonas[zona-1]>posicion);
-					if(step == stepmax && sentido)step = 0;	//Mantener steps en rango de 1 a stepmax (4 u 8)
-					if(step == 1 && !sentido) step = stepmax+1;	
-
-					if(sentido){
-						posicion++;
-						step++;
+			if(esperando){
+				esperando = 0;
+				//Obtener zona y chequear orden
+					if(recibido[2]&0b00111000){
+						zona = (recibido[2]&0b00111000)>>3;
+						recibido[2] = recibido[2]&0b00000111;
 					}
-					else {
-						posicion--;
-						step--;
+					else if(recibido[2]&0b00000111){
+						zona = (recibido[2]&0b00000111);
+						recibido[2] = recibido[2]&0b00000000;
 					}
-														
-					MBit1_PutVal(Q[(step-1)]);		
-				}				
+					else if(recibido[3]&0b00111000){
+						zona = (recibido[3]&0b00111000)>>3;
+						recibido[3] = recibido[3]&0b00000111;
+					}
+					else if(recibido[3]&0b00000111){
+						zona = (recibido[3]&0b00000111);
+						recibido[3] = recibido[3]&0b00000000;
+					}
+				
+				//Ubicar motor en la zona
+				TI2_EnableEvent();
+				while((posicion != zonas[zona-1])&& zona>0 && zona<7){
+					if(flagmotor){
+						flagmotor = 0;
+						sentido = (zonas[zona-1]>posicion);
+						if(step == stepmax)step = 1;	//Mantener steps en rango de 1 a stepmax (4 u 8)
+						if(step == 0) step = stepmax-1;	
+					
+						MBit1_PutVal(Q[(step-1)]);	
+					
+						if(sentido){
+							posicion++;
+							step++;
+						}
+						else {
+							posicion--;
+							step--;
+						}
+					}				
+				}
+				TI2_DisableEvent();
+							
+				//Armar mensaje para enviar
+				mensaje[0] = recibido[0]&0b10001111;
+				mensaje[1] = recibido[1]&0b00001111;
+				mensaje[2] = recibido[2];
+				mensaje[3] = recibido[3];
+				
+				/*TI5_Enable();
+				while(flagmove){}
+				flagmove = 0;
+				TI5_Disable();*/
+				
+				//Enviar
+				
+				AS2_SendBlock(mensaje, 4, send);
+				maestro = 0;
+				esperando = 0;
+				TI4_Enable();
+				flagignore = 1;
+				//AS1_SendBlock(mensaje, 4, send);
 			}
-			TI2_DisableEvent();
-			
-			//Armar mensaje para enviar
-			mensaje[0] = encabezado&0b10001111;
-			mensaje[1] = recibido[0]&0b00001111;
-			mensaje[2] = recibido[1];
-			mensaje[3] = recibido[2];
-			
-			//Enviar
-			AS2_SendBlock(mensaje, 4, &send);			
 		}
 		
 	}

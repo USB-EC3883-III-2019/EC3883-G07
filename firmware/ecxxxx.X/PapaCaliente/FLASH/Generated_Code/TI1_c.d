@@ -1,4 +1,5 @@
 
+
 Generated_Code/TI1_c.obj: \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Project_Headers/../Generated_Code/TI1.c \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Sources/Events.h \
@@ -19,5 +20,7 @@ Generated_Code/TI1_c.obj: \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/Inhr3.h \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/Inhr4.h \
 	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/TI2.h \
-	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/TI3.h 
+	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/TI3.h \
+	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/TI4.h \
+	C:/Users/LuisEduardo/Documents/Proyectos\ 3/CodeWarrior/PapaCaliente/Generated_Code/TI5.h 
 

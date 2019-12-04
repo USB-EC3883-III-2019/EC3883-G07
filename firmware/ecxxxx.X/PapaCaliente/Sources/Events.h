@@ -47,6 +47,8 @@
 #include "Inhr4.h"
 #include "TI2.h"
 #include "TI3.h"
+#include "TI4.h"
+#include "TI5.h"
 
 
 void AS1_OnError(void);
@@ -239,6 +241,38 @@ void TI3_OnInterrupt(void);
 **     Event       :  TI3_OnInterrupt (module Events)
 **
 **     Component   :  TI3 [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void TI4_OnInterrupt(void);
+/*
+** ===================================================================
+**     Event       :  TI4_OnInterrupt (module Events)
+**
+**     Component   :  TI4 [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void TI5_OnInterrupt(void);
+/*
+** ===================================================================
+**     Event       :  TI5_OnInterrupt (module Events)
+**
+**     Component   :  TI5 [TimerInt]
 **     Description :
 **         When a timer interrupt occurs this event is called (only
 **         when the component is enabled - <Enable> and the events are

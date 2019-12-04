@@ -37,6 +37,8 @@ extern char flagtorre;
 extern char flagser;
 extern char flagmotor;
 extern char flagespera;
+extern char flagignore;
+extern char flagmove;
 
 /*
 ** ===================================================================
@@ -278,6 +280,46 @@ void  AS2_OnFreeTxBuf(void)
 void TI3_OnInterrupt(void)
 {
   flagespera = 1;
+
+}
+
+/*
+** ===================================================================
+**     Event       :  TI4_OnInterrupt (module Events)
+**
+**     Component   :  TI4 [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void TI4_OnInterrupt(void)
+{
+  flagignore = 0;
+
+}
+
+/*
+** ===================================================================
+**     Event       :  TI5_OnInterrupt (module Events)
+**
+**     Component   :  TI5 [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void TI5_OnInterrupt(void)
+{
+  flagmove = 1; 
 
 }
 
