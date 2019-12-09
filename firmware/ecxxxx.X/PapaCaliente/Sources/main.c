@@ -125,7 +125,7 @@ void main(void)
 				AS2_SendBlock(mensaje, 4, send);
 			}
 			if(flagtorre){
-				if(AS2_GetCharsInRxBuf()>=4){
+				if(AS2_GetCharsInRxBuf()>=5){
 					AS2_RecvBlock(recibido, 4, send);
 					flagtorre = 0;
 						if(recibido[0]>127 && recibido[1]<128 && !recibido[2] && !recibido[3]){
